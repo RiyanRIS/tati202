@@ -13,7 +13,7 @@ class Dashboard extends Admin_Controller
 	function index()
 	{
         $data = array(
-            'title' => "Dashboard",
+            'title' => "Home",
         );
 		$this->load->view('dashboard', $data);
 	}

@@ -46,7 +46,7 @@ class Auth extends MY_Controller
 								'status' => true,
 								'kode_status' => 200,
 								'message' => "Berhasil!",
-								'url' => site_url('admin/dashboard')
+								'url' => site_url('home')
 							);
 						}
 					}
