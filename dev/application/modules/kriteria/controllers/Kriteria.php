@@ -54,11 +54,13 @@ class Kriteria extends Admin_Controller
 				$is_empty[] = !empty($post['kode_kriteria']) ? 0 : 1;
 				$is_empty[] = !empty($post['nama_kriteria']) ? 0 : 1;
 				$is_empty[] = !empty($post['sifat']) ? 0 : 1;
+				$is_empty[] = !empty($post['bobot']) ? 0 : 1;
 
 				$empty_notif = array(
 					'kode_kriteria',
 					'nama_kriteria',
 					'sifat',
+					'bobot',
 				);
 
 				$empty = array_keys($is_empty, 1);

@@ -29,6 +29,7 @@ global $SConfig;
                                                 <th>KODE KRITERIA</th>
                                                 <th>NAMA KRITERIA</th>
                                                 <th>SIFAT</th>
+                                                <th>BOBOT</th>
                                                 <th>#</th>
                                             </tr>
                                         </thead>
@@ -40,6 +41,7 @@ global $SConfig;
                                                     <td><?= $v->kode_kriteria ?></td>
                                                     <td><?= $v->nama_kriteria ?></td>
                                                     <td><?= $v->sifat ?></td>
+                                                    <td><?= $v->bobot ?></td>
                                                     <td>
                                                         <a href="<?= site_url('kriteria/aksi/' . $v->kode_kriteria) ?>" class="btn btn-info btn-sm">Ubah</a>
                                                         <button type="button" onclick="hapus('<?=site_url('kriteria/hapus/' . $v->kode_kriteria)?>')" class="btn btn-danger btn-sm">Hapus</button>

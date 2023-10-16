@@ -56,6 +56,12 @@ $kriteria = @$kriteria[0];
                                             </div>
                                         </div>
                                         <div class="form-group row">
+                                            <label for="bobot" class="col-sm-2 col-form-label">Bobot</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="bobot" required="true" id="bobot" placeholder="" value="<?=@$kriteria->bobot?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <label for="ahgatau" class="col-sm-2 col-form-label"></label>
                                             <div class="col-sm-10">
                                                 <button type="submit" class="btn btn-info">Simpan</button>

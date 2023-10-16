@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2023 at 08:36 PM
+-- Generation Time: Oct 16, 2023 at 08:17 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -54,18 +54,19 @@ INSERT INTO `kelas` (`kode_kelas`, `nama_kelas`) VALUES
 CREATE TABLE `kriteria` (
   `kode_kriteria` varchar(16) NOT NULL,
   `nama_kriteria` varchar(64) NOT NULL,
-  `sifat` varchar(32) NOT NULL
+  `sifat` varchar(32) NOT NULL,
+  `bobot` varchar(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `kriteria`
 --
 
-INSERT INTO `kriteria` (`kode_kriteria`, `nama_kriteria`, `sifat`) VALUES
-('KRT001', 'Nilai Raport', 'Benefit'),
-('KRT002', 'Absensi', 'Cost'),
-('KRT003', 'Sikap', 'Benefit'),
-('KRT004', 'Prestasi Ekstrakulikuler', 'Benefit');
+INSERT INTO `kriteria` (`kode_kriteria`, `nama_kriteria`, `sifat`, `bobot`) VALUES
+('KRT001', 'Nilai Raport', 'Benefit', '35'),
+('KRT002', 'Absensi', 'Cost', '25'),
+('KRT003', 'Sikap', 'Benefit', '25'),
+('KRT004', 'Prestasi Ekstrakulikuler', 'Benefit', '15');
 
 -- --------------------------------------------------------
 
