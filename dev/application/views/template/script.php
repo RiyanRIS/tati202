@@ -1,6 +1,8 @@
 <script src="https://adminlte.io/themes/v3/plugins/jquery/jquery.min.js"></script>
 <script src="https://adminlte.io/themes/v3/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+<script src="//adminlte.io/themes/v3/plugins/select2/js/select2.full.min.js"></script>
+
 <script src="https://adminlte.io/themes/v3/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="https://adminlte.io/themes/v3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://adminlte.io/themes/v3/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -24,7 +26,7 @@
   $(async function() {
 
     var pathArray = window.location.pathname.split('/');
-    var current = pathArray[2] ?? "home";
+    var current = pathArray[1] ?? "home";
 
     $('#nav li a').each(function() {
       var $this = $(this);
@@ -73,8 +75,12 @@
         },
         success: async function(data) {
           if (data.status) {
-            if (refresh) {
+            if (refresh == true) {
               window.location.href = data.url
+            } else {
+              await setTimeout(function() {
+                Swal.fire("Berhasil!", data.message, "success")
+              }, 500);
             }
           } else {
             if (data.err_form) {

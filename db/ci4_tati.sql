@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2023 at 08:17 AM
+-- Generation Time: Nov 06, 2023 at 10:25 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -67,6 +67,26 @@ INSERT INTO `kriteria` (`kode_kriteria`, `nama_kriteria`, `sifat`, `bobot`) VALU
 ('KRT002', 'Absensi', 'Cost', '25'),
 ('KRT003', 'Sikap', 'Benefit', '25'),
 ('KRT004', 'Prestasi Ekstrakulikuler', 'Benefit', '15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nilai`
+--
+
+CREATE TABLE `nilai` (
+  `kode_nilai` int(11) NOT NULL,
+  `nis` varchar(20) NOT NULL,
+  `kode_kriteria` varchar(24) NOT NULL,
+  `nilai` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `nilai`
+--
+
+INSERT INTO `nilai` (`kode_nilai`, `nis`, `kode_kriteria`, `nilai`) VALUES
+(1, '990040666152', 'KRT002', 5);
 
 -- --------------------------------------------------------
 
@@ -300,7 +320,7 @@ INSERT INTO `siswa` (`nis`, `nama_siswa`, `jk_siswa`, `alamat`, `tempat_lahir`, 
 CREATE TABLE `subkriteria` (
   `kode_subkriteria` int(11) NOT NULL,
   `kode_kriteria` varchar(16) NOT NULL,
-  `nilai` int(11) NOT NULL,
+  `nilai` varchar(30) NOT NULL,
   `keterangan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -309,16 +329,16 @@ CREATE TABLE `subkriteria` (
 --
 
 INSERT INTO `subkriteria` (`kode_subkriteria`, `kode_kriteria`, `nilai`, `keterangan`) VALUES
-(1, 'KRT002', 5, 'Jumlah Ketidakhadiran 0-2'),
-(2, 'KRT002', 4, 'Jumlah Ketidakhadiran 3-5'),
-(3, 'KRT002', 3, 'Jumlah Ketidakhadiran 6-8'),
-(4, 'KRT002', 2, 'Jumlah Ketidakhadiran 9-10'),
-(6, 'KRT002', 1, 'Jumlah Ketidakhadiran > 10'),
-(7, 'KRT003', 5, 'Sangat Baik'),
-(8, 'KRT003', 4, 'Baik'),
-(9, 'KRT003', 3, 'Cukup'),
-(10, 'KRT003', 2, 'Kurang'),
-(11, 'KRT003', 1, 'Sangat Kurang');
+(1, 'KRT002', '5', 'Jumlah Ketidakhadiran 0-2'),
+(2, 'KRT002', '4', 'Jumlah Ketidakhadiran 3-5'),
+(3, 'KRT002', '3', 'Jumlah Ketidakhadiran 6-8'),
+(4, 'KRT002', '2', 'Jumlah Ketidakhadiran 9-10'),
+(6, 'KRT002', '1', 'Jumlah Ketidakhadiran > 10'),
+(7, 'KRT003', '5', 'Sangat Baik'),
+(8, 'KRT003', '4', 'Baik'),
+(9, 'KRT003', '3', 'Cukup'),
+(10, 'KRT003', '2', 'Kurang'),
+(11, 'KRT003', '1', 'Sangat Kurang');
 
 -- --------------------------------------------------------
 
@@ -357,6 +377,12 @@ ALTER TABLE `kriteria`
   ADD PRIMARY KEY (`kode_kriteria`);
 
 --
+-- Indexes for table `nilai`
+--
+ALTER TABLE `nilai`
+  ADD PRIMARY KEY (`kode_nilai`);
+
+--
 -- Indexes for table `siswa`
 --
 ALTER TABLE `siswa`
@@ -381,10 +407,16 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `nilai`
+--
+ALTER TABLE `nilai`
+  MODIFY `kode_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `subkriteria`
 --
 ALTER TABLE `subkriteria`
-  MODIFY `kode_subkriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `kode_subkriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `user`

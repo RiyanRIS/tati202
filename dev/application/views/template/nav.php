@@ -78,7 +78,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= site_url('hasil') ?>" class="nav-link" data-nav="nilai">
+                    <a href="<?= site_url('hasil') ?>" class="nav-link" data-nav="hasil">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
                             Hasil
