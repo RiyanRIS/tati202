@@ -21,17 +21,23 @@ class Siswa extends Admin_Controller
 
 	function aksi($id = false)
 	{
+		$kelas = $this->kelas_model->get();
+		if(count($kelas) == 0){
+			$this->session->set_flashdata('error', "Buat data kelas terlebih dahulu.");
+			redirect(site_url('kelas/aksi'));
+			die();
+		}
 		if ($id) {
 			$data = array(
 				'title' => "Ubah Siswa",
 				"siswa" => $this->siswa_model->get($id),
-				"kelas" => $this->kelas_model->get(),
+				"kelas" => $kelas,
 				"is_update" => 1,
 			);
 		} else {
 			$data = array(
 				'title' => "Tambah Siswa",
-				"kelas" => $this->kelas_model->get(),
+				"kelas" => $kelas,
 				"siswa" => false,
 				"is_update" => 0
 			);

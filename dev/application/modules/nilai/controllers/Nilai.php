@@ -7,7 +7,7 @@ class Nilai extends Admin_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model(['kriteria_model', 'subkriteria_model', 'siswa_model', 'nilai_model']);
+		$this->load->model(['kriteria_model', 'subkriteria_model', 'siswa_model', 'nilai_model', 'kelas_model']);
 	}
 
 	function index()
@@ -16,30 +16,16 @@ class Nilai extends Admin_Controller
 			'title' => "Alternatif Nilai Siswa",
 			"nilai" => $this->nilai_model->get(),
 			"kriteria" => $this->kriteria_model->get(),
+			"kelas" => $this->kelas_model->get(),
 				"siswa" => $this->siswa_model->get(),
 				"is_update" => 0
 		);
 		$this->load->view('view_nilai', $data);
 	}
 
-	function aksi($id = false)
-	{
-		if ($id) {
-			$data = array(
-				'title' => "Ubah Alternatif Nilai",
-				"subkriteria" => $this->subkriteria_model->get($id),
-				"kriteria" => $this->kriteria_model->get(),
-				"is_update" => 1,
-			);
-		} else {
-			$data = array(
-				'title' => "Tambah Alternatif Nilai",
-				"kriteria" => $this->kriteria_model->get(),
-				"siswa" => $this->siswa_model->get(),
-				"is_update" => 0
-			);
-		}
-		$this->load->view('aksi', $data);
+	function tes($nis){
+		$kriteria = $this->kriteria_model->get_kriteria_by_nis($nis);
+		echo  "<pre>"; print_r($kriteria);
 	}
 
 	function api($param, $param2 = null)
@@ -92,9 +78,8 @@ class Nilai extends Admin_Controller
 							$msg['message'] = 'Terjadi kesalahan pada proses update.';
 						}
 					} else {
-						// if ($this->nilai_model->insert($post)) {
-							if (1) {
-							$this->session->set_flashdata('success', "Berhasil menambah data alternatif nilai.");
+						if ($this->nilai_model->insert($post)) {
+							// if (1) {
 							$msg = array(
 								'status' => true,
 								'kode_status' => 200,
@@ -112,6 +97,18 @@ class Nilai extends Admin_Controller
 			} else if($param == 'get_subkriteria') {
 				$subkriteria = $this->subkriteria_model->get_join_kriteria($post['kode_kriteria']);
 				$msg['data'] = $subkriteria;
+				$msg['status'] = true;
+				$msg['kode_status'] = 200;
+				$msg['message'] = "Berhasil!";
+			} else if($param == 'get_kriteria_by_nis') {
+				$kriteria = $this->kriteria_model->get_kriteria_by_nis($post['nis']);
+				$msg['data'] = $kriteria;
+				$msg['status'] = true;
+				$msg['kode_status'] = 200;
+				$msg['message'] = "Berhasil!";
+			} else if($param == 'get_siswa_by_kelas') {
+				$kriteria = $this->kriteria_model->get_siswa_by_kelas($post['kode_kelas']);
+				$msg['data'] = $kriteria;
 				$msg['status'] = true;
 				$msg['kode_status'] = 200;
 				$msg['message'] = "Berhasil!";
@@ -144,7 +141,7 @@ class Nilai extends Admin_Controller
 		die();
 	}
 
-	function hapus($kode_subkriteria)
+	function hapus($kode_nilai)
 	{
 		$msg = array(
 			'status' => false,
@@ -153,12 +150,12 @@ class Nilai extends Admin_Controller
 		);
 
 		if ($this->input->is_ajax_request()) {
-			if ($this->subkriteria_model->delete($kode_subkriteria)) {
+			if ($this->nilai_model->delete($kode_nilai)) {
 				$msg = array(
 					'status' => true,
 					'kode_status' => 200,
-					'message' => "Berhasil menghapus data subkriteria.",
-					'url' => site_url('subkriteria')
+					'message' => "Berhasil menghapus data nilai.",
+					'url' => site_url('nilai')
 				);
 			} else {
 				$msg['message'] = 'Terjadi kesalahan pada proses penghapusan.';
@@ -169,7 +166,5 @@ class Nilai extends Admin_Controller
 
 		echo json_encode($msg);
 		die();
-
-		// redirect(site_url('subkriteria'));
 	}
 }

@@ -30,7 +30,7 @@ $kriteria = @$kriteria[0];
                                     <h3 class="card-title"><?= @$title ?></h3>
                                 </div>
 
-                                <form class="form-horizontal" method="post" action="edit" data-refresh="false" data-url="<?= site_url("kriteria/api/ubah") ?>" id="myForm" enctype="multipart/form-data" accept-charset="utf-8">
+                                <form class="form-horizontal" method="post" action="edit" data-refresh="true" data-url="<?= site_url("kriteria/api/ubah") ?>" id="myForm" enctype="multipart/form-data" accept-charset="utf-8">
                                     <div class="card-body">
                                         <div class="form-group row">
                                             <label for="kode_kriteria" class="col-sm-2 col-form-label">Kode Kriteria</label>

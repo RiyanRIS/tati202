@@ -26,5 +26,19 @@ class Kriteria_model extends MY_Model
 		return count($data);
 	}
 
+	function get_kriteria_by_nis($nis){
+		$data = $this->db->query('SELECT * FROM kriteria
+		WHERE kode_kriteria NOT IN (
+			SELECT kode_kriteria FROM nilai WHERE nis = ' .$nis. '
+		)')->result();
+		return $data;
+	}
+
+	function get_siswa_by_kelas($kode_kelas){
+		$data = $this->db->query("SELECT * FROM siswa
+		WHERE kode_kelas = '" . $kode_kelas . "'")->result();
+		return $data;
+	}
+
 	
 }

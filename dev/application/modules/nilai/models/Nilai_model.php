@@ -9,11 +9,11 @@ class Nilai_model extends MY_Model
 
 	public function get_nilai_siswa($nis)
     {
-        // Misalnya, Anda memiliki kolom dalam tabel "nilai" yang sesuai dengan NIS dan kode kriteria.
-        // Anda dapat mengganti "kolom_nis" dan "kolom_kode_kriteria" dengan nama kolom yang sesuai di tabel Anda.
-        $this->db->table($this->_table_name);
+        $this->db->select("*");
+        $this->db->from($this->_table_name);
         $this->db->where($this->_table_name . '.nis', $nis);
         $this->db->join('siswa', 'siswa.nis = ' . $this->_table_name . ".nis");
+        $this->db->join('kriteria', 'kriteria.kode_kriteria = ' . $this->_table_name . ".kode_kriteria");
         $query = $this->db->get();
 
         // Periksa apakah query berhasil dan hasil ditemukan

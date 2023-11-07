@@ -62,7 +62,6 @@ $subkriteria = @$subkriteria[0];
                                                     <option value="3" <?= (@$subkriteria->nilai == '3' ? "selected" : "") ?>>3</option>
                                                     <option value="4" <?= (@$subkriteria->nilai == '4' ? "selected" : "") ?>>4</option>
                                                     <option value="5" <?= (@$subkriteria->nilai == '5' ? "selected" : "") ?>>5</option>
-                                                    <option value="1 - 100" <?= (@$subkriteria->nilai == '1 - 100' ? "selected" : "") ?>>1 - 100</option>
                                                 </select>
                                             </div>
                                         </div>

@@ -11,7 +11,6 @@
 			var $_database_password = "";
 		// -------Bagian data base setting---------//
 
-		
 		// -------Bagian Dasar WEB setting---------//
 			var $_site_name = "SDN 1 LIANG SALAHUTU";
 			var $_site_image = 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/400px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png';

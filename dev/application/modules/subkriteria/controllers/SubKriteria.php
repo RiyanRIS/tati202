@@ -21,18 +21,24 @@ class SubKriteria extends Admin_Controller
 
 	function aksi($id = false)
 	{
+		$kriteria = $this->kriteria_model->get();
+		if(count($kriteria) == 0){
+			$this->session->set_flashdata('error', "Buat data kriteria terlebih dahulu.");
+			redirect(site_url('kriteria/aksi'));
+			die();
+		}
 		if ($id) {
 			$data = array(
 				'title' => "Ubah SubKriteria",
 				"subkriteria" => $this->subkriteria_model->get($id),
-				"kriteria" => $this->kriteria_model->get(),
+				"kriteria" => $kriteria,
 				"is_update" => 1,
 			);
 		} else {
 			$data = array(
 				'title' => "Tambah SubKriteria",
 				"subkriteria" => false,
-				"kriteria" => $this->kriteria_model->get(),
+				"kriteria" => $kriteria,
 				"is_update" => 0
 			);
 		}

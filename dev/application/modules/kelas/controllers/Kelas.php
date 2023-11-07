@@ -145,7 +145,14 @@ class Kelas extends Admin_Controller
 		);
 
 		if ($this->input->is_ajax_request()) {
-			if ($this->kelas_model->getTotalSiswa($kode_kelas) == 0) {
+			$isValid = 1;
+			
+			if ($this->kelas_model->getTotalSiswa($kode_kelas) != 0) {
+				$isValid = 0;
+				$msg['message'] = 'Tidak dapat mengapus, data kelas ini sedang digunakan oleh siswa. Kosongkan siswa pada kelas untuk menghapus kelas ini.';
+			}
+
+			if($isValid){
 				if ($this->kelas_model->delete($kode_kelas)) {
 					$msg = array(
 						'status' => true,
@@ -156,8 +163,6 @@ class Kelas extends Admin_Controller
 				} else {
 					$msg['message'] = 'Terjadi kesalahan pada proses penghapusan.';
 				}
-			} else {
-				$msg['message'] = 'Tidak dapat mengapus, data kelas ini sedang digunakan oleh siswa. Kosongkan siswa pada kelas untuk menghapus kelas ini.';
 			}
 		} else {
 			$msg['message'] = "Permintaan tidak dapat diproses.";

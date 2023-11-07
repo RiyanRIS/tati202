@@ -75,7 +75,7 @@
         },
         success: async function(data) {
           if (data.status) {
-            if (refresh == true) {
+            if (refresh == 'true') {
               window.location.href = data.url
             } else {
               await setTimeout(function() {
@@ -109,7 +109,7 @@
 
     <?php if ($this->session->has_userdata('error')) { ?>
       await setTimeout(function() {
-        Swal.fire("Gagal!", "<?= $this->session->flashdata('success'); ?>", "error")
+        Swal.fire("Gagal!", "<?= $this->session->flashdata('error'); ?>", "error")
       }, 500);
     <?php } ?>
   })

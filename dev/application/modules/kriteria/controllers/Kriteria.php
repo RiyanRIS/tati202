@@ -130,7 +130,18 @@ class Kriteria extends Admin_Controller
 		);
 
 		if ($this->input->is_ajax_request()) {
-			if ($this->kriteria_model->getTotalSubkriteria($kode_kriteria) == 0) {
+			$isValid = 1;
+			if ($this->kriteria_model->getTotalSubkriteria($kode_kriteria) != 0) {
+				$msg['message'] = 'Tidak dapat mengapus, data kriteria ini sedang digunakan oleh subkriteria. Kosongkan subkriteria pada kriteria untuk menghapus kriteria ini.';
+				$isValid = 0;
+			}
+
+			if ($this->kriteria_model->getKriteriaOnNilai($kode_kriteria) != 0) {
+				$msg['message'] = 'Tidak dapat mengapus, data kriteria ini sedang digunakan untuk penilaian.';
+				$isValid = 0;
+			}
+
+			if ($isValid) {
 				if ($this->kriteria_model->delete($kode_kriteria)) {
 					$msg = array(
 						'status' => true,
@@ -141,8 +152,6 @@ class Kriteria extends Admin_Controller
 				} else {
 					$msg['message'] = 'Terjadi kesalahan pada proses penghapusan.';
 				}
-			} else {
-				$msg['message'] = 'Tidak dapat mengapus, data kriteria ini sedang digunakan oleh subkriteria. Kosongkan subkriteria pada kriteria untuk menghapus kriteria ini.';
 			}
 		} else {
 			$msg['message'] = "Permintaan tidak dapat diproses.";

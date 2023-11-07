@@ -26,5 +26,14 @@ class Kriteria_model extends MY_Model
 		return count($data);
 	}
 
+	function getKriteriaOnNilai($kode_kriteria){
+		$data = $this->db->select('*')
+						->from('nilai')
+						->where('nilai.kode_kriteria', $kode_kriteria)
+						->get()
+						->result();
+		return count($data);
+	}
+
 	
 }
