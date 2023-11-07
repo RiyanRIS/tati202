@@ -14,18 +14,19 @@ class Nilai extends Admin_Controller
 	{
 		$data = array(
 			'title' => "Alternatif Nilai Siswa",
-			"nilai" => $this->nilai_model->get(),
-			"kriteria" => $this->kriteria_model->get(),
-			"kelas" => $this->kelas_model->get(),
-				"siswa" => $this->siswa_model->get(),
-				"is_update" => 0
+			"nilai" => $this->nilai_model->get_nilai(),
 		);
 		$this->load->view('view_nilai', $data);
 	}
 
-	function tes($nis){
-		$kriteria = $this->kriteria_model->get_kriteria_by_nis($nis);
-		echo  "<pre>"; print_r($kriteria);
+	function aksi()
+	{
+		$data = array(
+			'title' => "Tambah Alternatif Nilai Siswa",
+			"kelas" => $this->kelas_model->get(),
+			"is_update" => 0
+		);
+		$this->load->view('aksi', $data);
 	}
 
 	function api($param, $param2 = null)
@@ -41,6 +42,7 @@ class Nilai extends Admin_Controller
 			if ($param == 'ubah') {
 				$is_update 	= $post['is_update'];
 				unset($post['is_update']);
+				unset($post['kelas']);
 
 				$is_empty[] = !empty($post['nis']) ? 0 : 1;
 				$is_empty[] = !empty($post['kode_kriteria']) ? 0 : 1;
@@ -94,25 +96,25 @@ class Nilai extends Admin_Controller
 					$msg['err_form'] = $filtered_empty_field;
 					$msg['message'] = 'Data belum lengkap. Silakan isi ' . $empty_field . '.';
 				}
-			} else if($param == 'get_subkriteria') {
+			} else if ($param == 'get_subkriteria') {
 				$subkriteria = $this->subkriteria_model->get_join_kriteria($post['kode_kriteria']);
 				$msg['data'] = $subkriteria;
 				$msg['status'] = true;
 				$msg['kode_status'] = 200;
 				$msg['message'] = "Berhasil!";
-			} else if($param == 'get_kriteria_by_nis') {
+			} else if ($param == 'get_kriteria_by_nis') {
 				$kriteria = $this->kriteria_model->get_kriteria_by_nis($post['nis']);
 				$msg['data'] = $kriteria;
 				$msg['status'] = true;
 				$msg['kode_status'] = 200;
 				$msg['message'] = "Berhasil!";
-			} else if($param == 'get_siswa_by_kelas') {
+			} else if ($param == 'get_siswa_by_kelas') {
 				$kriteria = $this->kriteria_model->get_siswa_by_kelas($post['kode_kelas']);
 				$msg['data'] = $kriteria;
 				$msg['status'] = true;
 				$msg['kode_status'] = 200;
 				$msg['message'] = "Berhasil!";
-			} else if($param == 'get_nilai_siswa'){
+			} else if ($param == 'get_nilai_siswa') {
 				if (!empty($post['nis'])) {
 					$nis = $post['nis'];
 
@@ -120,16 +122,16 @@ class Nilai extends Admin_Controller
 					$nilai_siswa = $this->nilai_model->get_nilai_siswa($nis);
 
 					if (!empty($nilai_siswa)) {
-							$msg['data'] = $nilai_siswa;
-							$msg['status'] = true;
-							$msg['kode_status'] = 200;
-							$msg['message'] = "Berhasil!";
+						$msg['data'] = $nilai_siswa;
+						$msg['status'] = true;
+						$msg['kode_status'] = 200;
+						$msg['message'] = "Berhasil!";
 					} else {
-							$msg['message'] = "Data nilai siswa tidak ditemukan.";
+						$msg['message'] = "Data nilai siswa tidak ditemukan.";
 					}
-			} else {
+				} else {
 					$msg['message'] = "NIS harus disertakan dalam permintaan.";
-			}
+				}
 			} else {
 				$msg['message'] = "Halaman tidak ditemukan";
 			}
@@ -157,6 +159,37 @@ class Nilai extends Admin_Controller
 					'message' => "Berhasil menghapus data nilai.",
 					'url' => site_url('nilai')
 				);
+			} else {
+				$msg['message'] = 'Terjadi kesalahan pada proses penghapusan.';
+			}
+		} else {
+			$msg['message'] = "Permintaan tidak dapat diproses.";
+		}
+
+		echo json_encode($msg);
+		die();
+	}
+
+	function hapus_all()
+	{
+		$msg = array(
+			'status' => false,
+			'kode_status' => 201,
+			'message' => "Data yang dikirim tidak sesuai"
+		);
+
+		if ($this->input->is_ajax_request()) {
+			if ($this->nilai_model->delete_all()) {
+				if($this->db->query("delete from hasil")){
+					$msg = array(
+						'status' => true,
+						'kode_status' => 200,
+						'message' => "Berhasil menghapus semua data.",
+						'url' => site_url('nilai')
+					);
+				} else {
+					$msg['message'] = 'Terjadi kesalahan pada proses penghapusan hasil.';
+				}
 			} else {
 				$msg['message'] = 'Terjadi kesalahan pada proses penghapusan.';
 			}

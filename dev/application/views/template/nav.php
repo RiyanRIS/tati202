@@ -73,7 +73,7 @@
                     <a href="<?= site_url('nilai') ?>" class="nav-link" data-nav="nilai">
                         <i class="nav-icon fas fa-graduation-cap"></i>
                         <p>
-                            Data Nilai
+                            Data Alternatif Nilai
                         </p>
                     </a>
                 </li>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2023 at 10:25 AM
+-- Generation Time: Nov 07, 2023 at 06:49 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `ci4_tati`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hasil`
+--
+
+CREATE TABLE `hasil` (
+  `kode_hasil` int(11) NOT NULL,
+  `nis` varchar(20) NOT NULL,
+  `hasil` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `hasil`
+--
+
+INSERT INTO `hasil` (`kode_hasil`, `nis`, `hasil`) VALUES
+(5, '990823882797', '0,95'),
+(6, '990509170319', '0,99'),
+(7, '990142555462', '0,93');
 
 -- --------------------------------------------------------
 
@@ -63,10 +84,10 @@ CREATE TABLE `kriteria` (
 --
 
 INSERT INTO `kriteria` (`kode_kriteria`, `nama_kriteria`, `sifat`, `bobot`) VALUES
-('KRT001', 'Nilai Raport', 'Benefit', '35'),
-('KRT002', 'Absensi', 'Cost', '25'),
-('KRT003', 'Sikap', 'Benefit', '25'),
-('KRT004', 'Prestasi Ekstrakulikuler', 'Benefit', '15');
+('C1', 'Nilai Raport', 'Benefit', '35'),
+('C2', 'Absensi', 'Cost', '25'),
+('C3', 'Sikap', 'Benefit', '25'),
+('C4', 'Prestasi Ekstrakulikuler', 'Benefit', '15');
 
 -- --------------------------------------------------------
 
@@ -86,7 +107,18 @@ CREATE TABLE `nilai` (
 --
 
 INSERT INTO `nilai` (`kode_nilai`, `nis`, `kode_kriteria`, `nilai`) VALUES
-(1, '990040666152', 'KRT002', 5);
+(22, '990142555462', 'C1', 80),
+(23, '990142555462', 'C2', 5),
+(24, '990142555462', 'C3', 5),
+(25, '990142555462', 'C4', 60),
+(27, '990509170319', 'C2', 5),
+(28, '990509170319', 'C3', 5),
+(30, '990823882797', 'C1', 85),
+(31, '990823882797', 'C2', 5),
+(32, '990823882797', 'C3', 4),
+(33, '990823882797', 'C4', 90),
+(34, '990509170319', 'C4', 85),
+(35, '990509170319', 'C1', 85);
 
 -- --------------------------------------------------------
 
@@ -329,16 +361,16 @@ CREATE TABLE `subkriteria` (
 --
 
 INSERT INTO `subkriteria` (`kode_subkriteria`, `kode_kriteria`, `nilai`, `keterangan`) VALUES
-(1, 'KRT002', '5', 'Jumlah Ketidakhadiran 0-2'),
-(2, 'KRT002', '4', 'Jumlah Ketidakhadiran 3-5'),
-(3, 'KRT002', '3', 'Jumlah Ketidakhadiran 6-8'),
-(4, 'KRT002', '2', 'Jumlah Ketidakhadiran 9-10'),
-(6, 'KRT002', '1', 'Jumlah Ketidakhadiran > 10'),
-(7, 'KRT003', '5', 'Sangat Baik'),
-(8, 'KRT003', '4', 'Baik'),
-(9, 'KRT003', '3', 'Cukup'),
-(10, 'KRT003', '2', 'Kurang'),
-(11, 'KRT003', '1', 'Sangat Kurang');
+(1, 'C2', '5', 'Jumlah Ketidakhadiran 0-2'),
+(2, 'C2', '4', 'Jumlah Ketidakhadiran 3-5'),
+(3, 'C2', '3', 'Jumlah Ketidakhadiran 6-8'),
+(4, 'C2', '2', 'Jumlah Ketidakhadiran 9-10'),
+(6, 'C2', '1', 'Jumlah Ketidakhadiran > 10'),
+(7, 'C3', '5', 'Sangat Baik'),
+(8, 'C3', '4', 'Baik'),
+(9, 'C3', '3', 'Cukup'),
+(10, 'C3', '2', 'Kurang'),
+(11, 'C3', '1', 'Sangat Kurang');
 
 -- --------------------------------------------------------
 
@@ -365,6 +397,12 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `role`) VALUES
 --
 
 --
+-- Indexes for table `hasil`
+--
+ALTER TABLE `hasil`
+  ADD PRIMARY KEY (`kode_hasil`);
+
+--
 -- Indexes for table `kelas`
 --
 ALTER TABLE `kelas`
@@ -380,7 +418,9 @@ ALTER TABLE `kriteria`
 -- Indexes for table `nilai`
 --
 ALTER TABLE `nilai`
-  ADD PRIMARY KEY (`kode_nilai`);
+  ADD PRIMARY KEY (`kode_nilai`),
+  ADD KEY `nilai_siswa` (`kode_kriteria`),
+  ADD KEY `nilai_siswa2` (`nis`);
 
 --
 -- Indexes for table `siswa`
@@ -407,10 +447,16 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `hasil`
+--
+ALTER TABLE `hasil`
+  MODIFY `kode_hasil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `nilai`
 --
 ALTER TABLE `nilai`
-  MODIFY `kode_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `kode_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `subkriteria`
@@ -427,6 +473,13 @@ ALTER TABLE `user`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `nilai`
+--
+ALTER TABLE `nilai`
+  ADD CONSTRAINT `nilai_siswa` FOREIGN KEY (`kode_kriteria`) REFERENCES `kriteria` (`kode_kriteria`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `nilai_siswa2` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `siswa`

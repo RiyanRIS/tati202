@@ -53,16 +53,11 @@ if($is_update == 0){
                                                 <input type="text" class="form-control" name="nama_kelas" required="true" id="nama_kelas" placeholder="" value="<?=$kelas->nama_kelas?>">
                                             </div>
                                         </div>
-                                        <!-- <div class="form-group row">
-                                            <label for="jumlah" class="col-sm-2 col-form-label">Jumlah</label>
-                                            <div class="col-sm-10">
-                                                <input type="number" class="form-control" name="jumlah" required="true" id="jumlah" placeholder="" value="<?=$kelas->jumlah?>">
-                                            </div>
-                                        </div> -->
                                         <div class="form-group row">
                                             <label for="ahgatau" class="col-sm-2 col-form-label"></label>
                                             <div class="col-sm-10">
                                                 <button type="submit" class="btn btn-info">Simpan</button>
+                                                <a href="<?=site_url('kelas')?>" class="btn btn-danger">Kembali</a>
                                             </div>
                                         </div>
 

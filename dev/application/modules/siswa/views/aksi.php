@@ -96,6 +96,7 @@ $siswa = @$siswa[0];
                                             <label for="ahgatau" class="col-sm-2 col-form-label"></label>
                                             <div class="col-sm-10">
                                                 <button type="submit" class="btn btn-info">Simpan</button>
+                                                <a href="<?=site_url('siswa')?>" class="btn btn-danger">Kembali</a>
                                             </div>
                                         </div>
 
