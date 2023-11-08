@@ -3,15 +3,7 @@
 <html lang="en">
 <?php
 global $SConfig;
-$kelas = @$kelas[0];
-if($is_update == 0){
-    $kelas = [
-        'kode_kelas' => '',
-        'nama_kelas' => '',
-        'jumlah' => '',
-    ];
-    $kelas = (object)$kelas;
-}
+$kriteria = @$kriteria[0];
 ?>
 <?= $this->load->view('template/head') ?>
 
@@ -38,26 +30,42 @@ if($is_update == 0){
                                     <h3 class="card-title"><?= @$title ?></h3>
                                 </div>
 
-                                <form class="form-horizontal" method="post" action="edit" data-refresh="<?=($is_update == 1 ? "false" : "true")?>" data-url="<?= site_url("kelas/api/ubah") ?>" id="myForm" enctype="multipart/form-data" accept-charset="utf-8">
+                                <form class="form-horizontal" method="post" action="edit" data-refresh="true" data-url="<?= site_url("kriteria/api/ubah") ?>" id="myForm" enctype="multipart/form-data" accept-charset="utf-8">
                                     <div class="card-body">
                                         <div class="form-group row">
-                                            <label for="kode_kelas" class="col-sm-2 col-form-label">Kode Kelas</label>
+                                            <label for="kode_kriteria" class="col-sm-2 col-form-label">Kode Kriteria</label>
                                             <div class="col-sm-10">
                                                 <input type="hidden" name="is_update" value="<?=$is_update?>">
-                                                <input type="text" class="form-control" name="kode_kelas" required="true" id="kode_kelas" placeholder="Kode kelas unik, tidak boleh sama" <?=($is_update == 1 ? "readonly title='Tidak dapat mengubah kode kelas.'" : "")?> value="<?=$kelas->kode_kelas?>">
+                                                <input type="text" class="form-control" name="kode_kriteria" required="true" id="kode_kriteria" placeholder="Kode kriteria unik, tidak boleh sama" <?=($is_update == 1 ? "readonly title='Tidak dapat mengubah kode kriteria.'" : "")?> value="<?=@$kriteria->kode_kriteria?>">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="nama_kelas" class="col-sm-2 col-form-label">Nama Kelas</label>
+                                            <label for="nama_kriteria" class="col-sm-2 col-form-label">Nama Kriteria</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="nama_kelas" required="true" id="nama_kelas" placeholder="" value="<?=$kelas->nama_kelas?>">
+                                                <input type="text" class="form-control" name="nama_kriteria" required="true" id="nama_kriteria" placeholder="" value="<?=@$kriteria->nama_kriteria?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="sifat" class="col-sm-2 col-form-label">Sifat</label>
+                                            <div class="col-sm-10">
+                                                <select name="sifat" id="sifat" class="form-control" required="true">
+                                                    <option value="">-- PILIH SIFAT --</option>
+                                                    <option value="Cost" <?=@$kriteria->sifat == "Cost" ? "selected" : ""?>>Cost</option>
+                                                    <option value="Benefit" <?=@$kriteria->sifat == "Benefit" ? "selected" : ""?>>Benefit</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="bobot" class="col-sm-2 col-form-label">Bobot</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="bobot" required="true" id="bobot" placeholder="" value="<?=@$kriteria->bobot?>">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="ahgatau" class="col-sm-2 col-form-label"></label>
                                             <div class="col-sm-10">
                                                 <button type="submit" class="btn btn-info">Simpan</button>
-                                                <a href="<?=site_url('kelas')?>" class="btn btn-danger">Kembali</a>
+                                                <a href="<?=site_url('kriteria')?>" class="btn btn-danger">Kembali</a>
                                             </div>
                                         </div>
 

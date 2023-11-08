@@ -1,36 +1,36 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Kelas extends Admin_Controller
+class Kriteria extends Admin_Controller
 {
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model(['kelas_model']);
+		$this->load->model(['kriteria_model']);
 	}
 
 	function index()
 	{
 		$data = array(
-			'title' => "Data Kelas",
-			"kelas" => $this->kelas_model->get()
+			'title' => "Data Kriteria",
+			"kriteria" => $this->kriteria_model->get()
 		);
-		$this->load->view('kelas', $data);
+		$this->load->view('kriteria', $data);
 	}
 
 	function aksi($id = false)
 	{
 		if ($id) {
 			$data = array(
-				'title' => "Ubah Kelas",
-				"kelas" => $this->kelas_model->get($id),
+				'title' => "Ubah Kriteria",
+				"kriteria" => $this->kriteria_model->get($id),
 				"is_update" => 1,
 			);
 		} else {
 			$data = array(
-				'title' => "Tambah Kelas",
-				"kelas" => false,
+				'title' => "Tambah Kriteria",
+				"kriteria" => false,
 				"is_update" => 0
 			);
 		}
@@ -51,12 +51,16 @@ class Kelas extends Admin_Controller
 				$is_update 	= $post['is_update'];
 				unset($post['is_update']);
 
-				$is_empty[] = !empty($post['kode_kelas']) ? 0 : 1;
-				$is_empty[] = !empty($post['nama_kelas']) ? 0 : 1;
+				$is_empty[] = !empty($post['kode_kriteria']) ? 0 : 1;
+				$is_empty[] = !empty($post['nama_kriteria']) ? 0 : 1;
+				$is_empty[] = !empty($post['sifat']) ? 0 : 1;
+				$is_empty[] = !empty($post['bobot']) ? 0 : 1;
 
 				$empty_notif = array(
-					'kode_kelas',
-					'nama_kelas',
+					'kode_kriteria',
+					'nama_kriteria',
+					'sifat',
+					'bobot',
 				);
 
 				$empty = array_keys($is_empty, 1);
@@ -71,53 +75,41 @@ class Kelas extends Admin_Controller
 				if ($number_of_empty_field == 0) {
 
 					if ($is_update == "1") {
-						$kode_kelas 	= $post['kode_kelas'];
-						unset($post['kode_kelas']);
-						if ($this->kelas_model->update($post, ['kode_kelas' => $kode_kelas])) {
+						$kode_kriteria 	= $post['kode_kriteria'];
+						unset($post['kode_kriteria']);
+						if ($this->kriteria_model->update($post, ['kode_kriteria' => $kode_kriteria])) {
+							$this->session->set_flashdata('success', "Berhasil mengubah data kriteria.");
 							$msg = array(
 								'status' => true,
 								'kode_status' => 200,
-								'message' => "Berhasil mengubah data kelas.",
-								'url' => site_url('kelas')
+								'message' => "Berhasil mengubah data kriteria.",
+								'url' => site_url('kriteria')
 							);
 						} else {
 							$msg['message'] = 'Terjadi kesalahan pada proses update.';
 						}
 					} else {
-						if (!$this->kelas_model->hasKodeKelas($post['kode_kelas'])) {
-							if ($this->kelas_model->insert($post)) {
-								$this->session->set_flashdata('success', "Berhasil menambah data kelas.");
+						if (!$this->kriteria_model->hasKodeKriteria($post['kode_kriteria'])) {
+							if ($this->kriteria_model->insert($post)) {
+								$this->session->set_flashdata('success', "Berhasil menambah data kriteria.");
 								$msg = array(
 									'status' => true,
 									'kode_status' => 200,
-									'message' => "Berhasil menambah data kelas.",
-									'url' => site_url('kelas')
+									'message' => "Berhasil menambah data kriteria.",
+									'url' => site_url('kriteria')
 								);
 							} else {
 								$msg['message'] = 'Terjadi kesalahan pada proses penginputan.';
 							}
 						} else {
-							$msg['err_form'] = ['kode_kelas'];
-							$msg['message'] = 'Kode Kelas sudah tersedia.';
+							$msg['err_form'] = ['kode_kriteria'];
+							$msg['message'] = 'Kode Kriteria sudah digunakan.';
 						}
 					}
 				} else {
 					$msg['err_form'] = $filtered_empty_field;
 					$msg['message'] = 'Data belum lengkap. Silakan isi ' . $empty_field . '.';
 				}
-			} else if ($param == 'ambil_siswa') {
-				$kode_kelas = $param2;
-				$data = $this->kelas_model->get_siswa_by_kelas($kode_kelas);
-				$kelas = $this->kelas_model->get($kode_kelas);
-				$html = $this->load->view('modal_viewsiswa', ['siswa' => $data], true);
-				$msg = array(
-					'status' => true,
-					'kode_status' => 200,
-					'message' => "Berhasil mengambil data siswa " . $kelas[0]->nama_kelas . ".",
-					'html' => $html,
-					'title' => "Data Siswa " . $kelas[0]->nama_kelas,
-					'url' => site_url('siswa')
-				);
 			} else {
 				$msg['message'] = "Halaman tidak ditemukan";
 			}
@@ -129,7 +121,7 @@ class Kelas extends Admin_Controller
 		die();
 	}
 
-	function hapus($kode_kelas)
+	function hapus($kode_kriteria)
 	{
 		$msg = array(
 			'status' => false,
@@ -139,19 +131,23 @@ class Kelas extends Admin_Controller
 
 		if ($this->input->is_ajax_request()) {
 			$isValid = 1;
-			
-			if ($this->kelas_model->getTotalSiswa($kode_kelas) != 0) {
+			if ($this->kriteria_model->getTotalSubkriteria($kode_kriteria) != 0) {
+				$msg['message'] = 'Tidak dapat mengapus, data kriteria ini sedang digunakan oleh subkriteria. Kosongkan subkriteria pada kriteria untuk menghapus kriteria ini.';
 				$isValid = 0;
-				$msg['message'] = 'Tidak dapat mengapus, data kelas ini sedang digunakan oleh siswa. Kosongkan siswa pada kelas untuk menghapus kelas ini.';
 			}
 
-			if($isValid){
-				if ($this->kelas_model->delete($kode_kelas)) {
+			if ($this->kriteria_model->getKriteriaOnNilai($kode_kriteria) != 0) {
+				$msg['message'] = 'Tidak dapat mengapus, data kriteria ini sedang digunakan untuk penilaian.';
+				$isValid = 0;
+			}
+
+			if ($isValid) {
+				if ($this->kriteria_model->delete($kode_kriteria)) {
 					$msg = array(
 						'status' => true,
 						'kode_status' => 200,
-						'message' => "Berhasil menghapus data kelas.",
-						'url' => site_url('kelas')
+						'message' => "Berhasil menghapus data kriteria.",
+						'url' => site_url('kriteria')
 					);
 				} else {
 					$msg['message'] = 'Terjadi kesalahan pada proses penghapusan.';
@@ -164,6 +160,6 @@ class Kelas extends Admin_Controller
 		echo json_encode($msg);
 		die();
 
-		// redirect(site_url('kelas'));
+		// redirect(site_url('kriteria'));
 	}
 }

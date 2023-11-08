@@ -78,7 +78,6 @@ class Kriteria extends Admin_Controller
 						$kode_kriteria 	= $post['kode_kriteria'];
 						unset($post['kode_kriteria']);
 						if ($this->kriteria_model->update($post, ['kode_kriteria' => $kode_kriteria])) {
-							$this->session->set_flashdata('success', "Berhasil mengubah data kriteria.");
 							$msg = array(
 								'status' => true,
 								'kode_status' => 200,

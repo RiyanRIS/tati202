@@ -30,7 +30,7 @@ $subkriteria = @$subkriteria[0];
                                     <h3 class="card-title"><?= @$title ?></h3>
                                 </div>
 
-                                <form class="form-horizontal" method="post" action="edit" data-refresh="false" data-url="<?= site_url("subkriteria/api/ubah") ?>" id="myForm" enctype="multipart/form-data" accept-charset="utf-8">
+                                <form class="form-horizontal" method="post" action="edit" data-refresh="<?=($is_update == 1 ? "false" : "true")?>" data-url="<?= site_url("subkriteria/api/ubah") ?>" id="myForm" enctype="multipart/form-data" accept-charset="utf-8">
                                 <input type="hidden" name="is_update" value="<?= $is_update ?>">
                                 <input type="hidden" name="kode_subkriteria" value="<?= @$subkriteria->kode_subkriteria ?>">
                                     <div class="card-body">

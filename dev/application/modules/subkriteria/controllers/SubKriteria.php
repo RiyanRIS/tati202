@@ -84,7 +84,6 @@ class SubKriteria extends Admin_Controller
 						$kode_subkriteria 	= $post['kode_subkriteria'];
 						unset($post['kode_subkriteria']);
 						if ($this->subkriteria_model->update($post, ['kode_subkriteria' => $kode_subkriteria])) {
-							$this->session->set_flashdata('success', "Berhasil mengubah data subkriteria.");
 							$msg = array(
 								'status' => true,
 								'kode_status' => 200,

@@ -113,7 +113,6 @@ class Siswa extends Admin_Controller
 							$nis 	= $post['nis'];
 							unset($post['nis']);
 							if ($this->siswa_model->update($post, ['nis' => $nis])) {
-								$this->session->set_flashdata('success', "Berhasil mengubah data siswa.");
 								$msg = array(
 									'status' => true,
 									'kode_status' => 200,
@@ -176,37 +175,6 @@ class Siswa extends Admin_Controller
 
 		echo json_encode($msg);
 		die();
-	}
-
-	function fak(){
-		require_once 'vendor/autoload.php';
-		// $this->load->library('Faker');
-		$faker = Faker\Factory::create('id_ID');
-
-		$jk_siswa = array("laki-laki", "perempuan");
-		$kelas = array("KLS001", "KLS002", "KLS003", "KLS004", "KLS005", "KLS006");
-
-		for ($i=0; $i < 200; $i++) { 
-			$randomIndex = array_rand($jk_siswa);
-			$randomString = $jk_siswa[$randomIndex];
-
-			$randomIndex = array_rand($kelas);
-			$randomKelas = $kelas[$randomIndex];
-
-			$post = [
-				'nis' => $faker->numberBetween(990000000000, 999999999999),
-				'nama_siswa' => $faker->name(),
-				'jk_siswa' => $randomString,
-				'alamat' => $faker->streetAddress,
-				'tempat_lahir' => $faker->city,
-				'tanggal_lahir' => $faker->date($format = 'Y-m-d', $max = 'now'),
-				'foto' => null,
-				'kode_kelas' => $randomKelas
-			];
-			// echo "<br><br></br>";
-			// print_r($post);
-			// $this->siswa_model->insert($post);
-		}
 	}
 
 	function hapus($nis)

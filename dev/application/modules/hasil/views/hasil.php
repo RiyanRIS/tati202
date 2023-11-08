@@ -24,7 +24,6 @@ global $SConfig;
                                     <table class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <!-- <th>NIS</th> -->
                                                 <th>NAMA SISWA</th>
                                                 <?php foreach ($kriteria as $key => $v) {
                                                     echo "<th>$v->nama_kriteria ($v->kode_kriteria)</th>";
@@ -34,7 +33,6 @@ global $SConfig;
                                         <tbody>
                                             <?php foreach ($nilai_by_siswa as $key => $v) { ?>
                                                 <tr>
-                                                    <!-- <td><?= $v->nis ?></td> -->
                                                     <td><?= $v->nama_siswa ?></td>
                                                     <?php
                                                     $nis = $v->nis;
@@ -71,7 +69,6 @@ global $SConfig;
                                         <tbody>
                                             <?php foreach ($nilai_by_siswa as $key => $v) { ?>
                                                 <tr>
-                                                    <!-- <td><?= $v->nis ?></td> -->
                                                     <td><?= $v->nama_siswa ?></td>
                                                     <?php
                                                     $nis = $v->nis;
@@ -122,7 +119,6 @@ global $SConfig;
                                                 $hasil_final = $hasil * $v->bobot / 100;
                                                 $total += $hasil_final;
                                             }
-                                            
                                         }
                                         $total = number_format($total, 2, ',', '.');
                                         $perangkingan[] = array('nis' => $nis, 'nama_siswa' => $nama_siswa, 'total' => $total);

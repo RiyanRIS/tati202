@@ -29,7 +29,7 @@ $siswa = @$siswa[0];
                                 <div class="card-header">
                                     <h3 class="card-title"><?= @$title ?></h3>
                                 </div>
-                                <form class="form-horizontal" method="post" action="edit" data-refresh="false" data-url="<?= site_url("siswa/api/ubah") ?>" id="myForm" enctype="multipart/form-data" accept-charset="utf-8">
+                                <form class="form-horizontal" method="post" action="edit" data-refresh="<?=($is_update == 1 ? "false" : "true")?>" data-url="<?= site_url("siswa/api/ubah") ?>" id="myForm" enctype="multipart/form-data" accept-charset="utf-8">
                                     <div class="card-body">
                                         <div class="form-group row">
                                             <label for="nis" class="col-sm-2 col-form-label">Nomor Induk Siswa</label>
