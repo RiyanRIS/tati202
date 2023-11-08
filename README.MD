@@ -6,10 +6,9 @@
 - database mysql
 
 ### Instalasi
-- Download Repo ini
-- Pindahkan ke folder htdocs
-- buat database
-- import database
+- download Repo ini
+- pindahkan ke folder htdocs
+- buat database lalu import database.sql
 - sesuaikan pengaturan database di file ./configuration.php
 - jalankan di browser
 
