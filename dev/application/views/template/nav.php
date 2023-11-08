@@ -29,6 +29,7 @@
 
         <nav class="mt-2" id="nav">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-header">DASHBOARD</li>
                 <li class="nav-item">
                     <a href="<?= site_url('home') ?>" class="nav-link" data-nav="home">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -37,19 +38,20 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="<?= site_url('siswa') ?>" class="nav-link" data-nav="siswa">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                            Data Siswa
-                        </p>
-                    </a>
-                </li>
+                <li class="nav-header">DATA MASTER</li>
                 <li class="nav-item">
                     <a href="<?= site_url('kelas') ?>" class="nav-link" data-nav="kelas">
                         <i class="nav-icon fas fa-landmark"></i>
                         <p>
                             Data Kelas
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= site_url('siswa') ?>" class="nav-link" data-nav="siswa">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Data Siswa
                         </p>
                     </a>
                 </li>
@@ -69,6 +71,7 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-header">TRANSAKSI & PERHITUNGAN</li>
                 <li class="nav-item">
                     <a href="<?= site_url('nilai') ?>" class="nav-link" data-nav="nilai">
                         <i class="nav-icon fas fa-graduation-cap"></i>
@@ -81,10 +84,20 @@
                     <a href="<?= site_url('hasil') ?>" class="nav-link" data-nav="hasil">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
-                            Hasil
+                            Hasil Perhitungan
                         </p>
                     </a>
                 </li>
+                <li class="nav-header">MANAJEMEN USER</li>
+                <li class="nav-item">
+                    <a href="<?= site_url('pengguna') ?>" class="nav-link" data-nav="pengguna">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Pengguna
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-header">KELUAR</li>
                 <li class="nav-item">
                     <a href="<?= site_url('logout') ?>" class="nav-link">
                         <i class="nav-icon fa fa-sign-out-alt"></i>
