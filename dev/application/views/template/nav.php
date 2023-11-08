@@ -1,3 +1,4 @@
+<?php $isadmin = $this->session->userdata()['role'] == 'admin' ? 1 : 0; ?>
 <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="https://adminlte.io/themes/v3/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
 </div>
@@ -23,7 +24,7 @@
                 <img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Admin</a>
+                <a href="#" class="d-block"><?=$isadmin ? "Administrator" : "Kepala Sekolah"?></a>
             </div>
         </div>
 
@@ -38,6 +39,7 @@
                         </p>
                     </a>
                 </li>
+                <?php if($isadmin){ ?>
                 <li class="nav-header">DATA MASTER</li>
                 <li class="nav-item">
                     <a href="<?= site_url('kelas') ?>" class="nav-link" data-nav="kelas">
@@ -71,7 +73,9 @@
                         </p>
                     </a>
                 </li>
+                <?php } ?>
                 <li class="nav-header">TRANSAKSI & PERHITUNGAN</li>
+                <?php if($isadmin){ ?>
                 <li class="nav-item">
                     <a href="<?= site_url('nilai') ?>" class="nav-link" data-nav="nilai">
                         <i class="nav-icon fas fa-graduation-cap"></i>
@@ -80,6 +84,7 @@
                         </p>
                     </a>
                 </li>
+                <?php } ?>
                 <li class="nav-item">
                     <a href="<?= site_url('hasil') ?>" class="nav-link" data-nav="hasil">
                         <i class="nav-icon fas fa-copy"></i>
@@ -88,6 +93,7 @@
                         </p>
                     </a>
                 </li>
+                <?php if($isadmin){ ?>
                 <li class="nav-header">MANAJEMEN USER</li>
                 <li class="nav-item">
                     <a href="<?= site_url('pengguna') ?>" class="nav-link" data-nav="pengguna">
@@ -97,6 +103,7 @@
                         </p>
                     </a>
                 </li>
+                <?php } ?>
                 <li class="nav-header">KELUAR</li>
                 <li class="nav-item">
                     <a href="<?= site_url('logout') ?>" class="nav-link">

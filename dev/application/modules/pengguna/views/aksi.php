@@ -3,7 +3,7 @@
 <html lang="en">
 <?php
 global $SConfig;
-$kriteria = @$kriteria[0];
+$pengguna = @$pengguna[0];
 ?>
 <?= $this->load->view('template/head') ?>
 
@@ -30,42 +30,55 @@ $kriteria = @$kriteria[0];
                                     <h3 class="card-title"><?= @$title ?></h3>
                                 </div>
 
-                                <form class="form-horizontal" method="post" action="edit" data-refresh="true" data-url="<?= site_url("kriteria/api/ubah") ?>" id="myForm" enctype="multipart/form-data" accept-charset="utf-8">
+                                <form class="form-horizontal" method="post" action="edit" data-refresh="<?=($is_update ? "false" : "true")?>" data-url="<?= site_url("pengguna/api/ubah") ?>" id="myForm" enctype="multipart/form-data" accept-charset="utf-8">
                                     <div class="card-body">
                                         <div class="form-group row">
-                                            <label for="kode_kriteria" class="col-sm-2 col-form-label">Kode Kriteria</label>
+                                            <label for="username" class="col-sm-2 col-form-label">Username</label>
                                             <div class="col-sm-10">
-                                                <input type="hidden" name="is_update" value="<?=$is_update?>">
-                                                <input type="text" class="form-control" name="kode_kriteria" required="true" id="kode_kriteria" placeholder="Kode kriteria unik, tidak boleh sama" <?=($is_update == 1 ? "readonly title='Tidak dapat mengubah kode kriteria.'" : "")?> value="<?=@$kriteria->kode_kriteria?>">
+                                                <input type="hidden" name="id_user" value="<?= @$pengguna->id_user ?>">
+                                                <input type="hidden" name="is_update" value="<?= $is_update ?>">
+                                                <input type="text" class="form-control" name="username" required="true" id="username" placeholder="Username bersifat unik" value="<?= @$pengguna->username ?>">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="nama_kriteria" class="col-sm-2 col-form-label">Nama Kriteria</label>
+                                            <label for="password" class="col-sm-2 col-form-label">Password</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="nama_kriteria" required="true" id="nama_kriteria" placeholder="" value="<?=@$kriteria->nama_kriteria?>">
+                                                <input type="password" <?= $is_update ? "" : "required" ?> class="form-control" name="password" id="password" placeholder="<?= $is_update ? "Isi jika merubah password" : "Password harus mengandung huruf kecil, huruf besar, dan angka." ?>" value="">
+                                                <div id="password-strength-container" class=" mt-3">
+                                                    <div class="progress">
+                                                        <div id="password-strength" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                                                    </div>
+                                                    <div id="password-labels" class="text-muted small">
+                                                        <span class="badge bg-danger" id="digit-label">Digit</span> |
+                                                        <span class="badge bg-danger" id="uppercase-label">Uppercase</span> |
+                                                        <span class="badge bg-danger" id="lowercase-label">Lowercase</span> |
+                                                        <!-- <span class="badge bg-danger" id="length-label">&gt;8</span> -->
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="sifat" class="col-sm-2 col-form-label">Sifat</label>
+                                            <label for="confirm-password" class="col-sm-2 col-form-label">Konfirmasi Password</label>
                                             <div class="col-sm-10">
-                                                <select name="sifat" id="sifat" class="form-control" required="true">
-                                                    <option value="">-- PILIH SIFAT --</option>
-                                                    <option value="Cost" <?=@$kriteria->sifat == "Cost" ? "selected" : ""?>>Cost</option>
-                                                    <option value="Benefit" <?=@$kriteria->sifat == "Benefit" ? "selected" : ""?>>Benefit</option>
+                                                <input type="password" <?= $is_update ? "" : "required" ?> class="form-control" name="confirm_password" id="confirm-password" placeholder="" value="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="role" class="col-sm-2 col-form-label">Role</label>
+                                            <div class="col-sm-10">
+                                                <select name="role" id="role" class="form-control" required="true">
+                                                    <option value="">-- PILIH ROLE --</option>
+                                                    <option value="admin" <?= @$pengguna->role == "admin" ? "selected" : "" ?>>Administrator</option>
+                                                    <option value="kepalasekolah" <?= @$pengguna->role == "kepalasekolah" ? "selected" : "" ?>>Kepala Sekolah</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <label for="bobot" class="col-sm-2 col-form-label">Bobot</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="bobot" required="true" id="bobot" placeholder="" value="<?=@$kriteria->bobot?>">
-                                            </div>
-                                        </div>
+
                                         <div class="form-group row">
                                             <label for="ahgatau" class="col-sm-2 col-form-label"></label>
                                             <div class="col-sm-10">
                                                 <button type="submit" class="btn btn-info">Simpan</button>
-                                                <a href="<?=site_url('kriteria')?>" class="btn btn-danger">Kembali</a>
+                                                <a href="<?= site_url('pengguna') ?>" class="btn btn-danger">Kembali</a>
                                             </div>
                                         </div>
 
@@ -86,7 +99,96 @@ $kriteria = @$kriteria[0];
     </div>
 
     <?= $this->load->view('template/script') ?>
+    <script>
+        $(document).ready(function() {
+            // var password = $("#password").val();
+            var passwordStrengthh = 0;
 
+            // Fungsi untuk memeriksa kekuatan password
+            function checkPasswordStrength() {
+                var password = $("#password").val();
+                var passwordStrength = 0;
+
+                // Pemeriksaan kekuatan password
+                if (password.match(/[0-9]+/)) {
+                    passwordStrength += 33;
+                    $("#digit-label").addClass("bg-success").removeClass("bg-danger");
+                } else {
+                    $("#digit-label").addClass("bg-danger").removeClass("bg-success");
+                }
+
+                if (password.match(/[A-Z]+/)) {
+                    passwordStrength += 33;
+                    $("#uppercase-label").addClass("bg-success").removeClass("bg-danger");
+                } else {
+                    $("#uppercase-label").addClass("bg-danger").removeClass("bg-success");
+                }
+
+                if (password.match(/[a-z]+/)) {
+                    passwordStrength += 34;
+                    $("#lowercase-label").addClass("bg-success").removeClass("bg-danger");
+                } else {
+                    $("#lowercase-label").addClass("bg-danger").removeClass("bg-success");
+                }
+
+                // if (password.length >= 8) {
+                //     passwordStrength += 25;
+                //     $("#length-label").addClass("bg-success").removeClass("bg-danger");
+                // } else {
+                //     $("#length-label").addClass("bg-danger").removeClass("bg-success");
+                // }
+
+                passwordStrengthh = passwordStrength
+
+                if (passwordStrength == 100) {
+                    $("#password").addClass("is-valid").removeClass("is-invalid");
+                    $("#password-strength").addClass("bg-success").removeClass("bg-danger");
+                } else {
+                    $("#password").addClass("is-invalid").removeClass("is-valid");
+                    $("#password-strength").removeClass("bg-success");
+                }
+
+                // Update tampilan progres bar
+                $("#password-strength").css("width", passwordStrength + "%");
+                $("#password-strength").html(passwordStrength + "%");
+            }
+
+            // Pemanggilan fungsi ketika password berubah
+            $("#password").on("input", checkPasswordStrength);
+
+            // Pemeriksaan konfirmasi password
+            $("#confirm-password").on("input", function() {
+                var password = $("#password").val();
+                var confirmPassword = $(this).val();
+
+                if (password === confirmPassword) {
+                    $(this).removeClass("is-invalid").addClass("is-valid");
+                } else {
+                    $(this).removeClass("is-valid").addClass("is-invalid");
+                }
+            });
+
+            // Validasi saat mengirim formulir
+            // $("form").submit(function(event) {
+            //     var password = $("#password").val();
+            //     var confirmPassword = $("#confirm-password").val();
+
+            //     // Pemeriksaan terakhir sebelum mengirim formulir
+            //     if (password !== confirmPassword) {
+            //         event.preventDefault(); // Mencegah pengiriman formulir jika konfirmasi password tidak sesuai
+            //         $("#confirm-password").addClass("is-invalid");
+            //         return
+            //     }
+
+            //     if (passwordStrengthh != 100) {
+            //         event.preventDefault(); // Mencegah pengiriman formulir jika konfirmasi password tidak sesuai
+            //         return
+            //     }
+
+            //     alert("done")
+            // });
+        });
+    </script>
 </body>
 
 </html>

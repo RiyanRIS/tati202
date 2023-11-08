@@ -18,7 +18,7 @@ global $SConfig;
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <a href="<?= site_url('kriteria/aksi') ?>" class="btn btn-success btn-sm">Tambah Kriteria</a>
+                                    <a href="<?= site_url('pengguna/aksi') ?>" class="btn btn-success btn-sm">Tambah Pengguna</a>
                                 </div>
 
                                 <div class="card-body">
@@ -26,25 +26,23 @@ global $SConfig;
                                         <thead>
                                             <tr>
                                                 <th>NO</th>
-                                                <th>KODE KRITERIA</th>
-                                                <th>NAMA KRITERIA</th>
-                                                <th>SIFAT</th>
-                                                <th>BOBOT</th>
+                                                <th>USERNAME</th>
+                                                <th>ROLE</th>
                                                 <th>#</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($kriteria as $key => $v) {
+                                            <?php foreach ($pengguna as $key => $v) {
                                                 ?>
                                                 <tr>
                                                     <td><?= ++$key ?></td>
-                                                    <td><?= $v->kode_kriteria ?></td>
-                                                    <td><?= $v->nama_kriteria ?></td>
-                                                    <td><?= $v->sifat ?></td>
-                                                    <td><?= $v->bobot ?></td>
+                                                    <td><?= $v->username ?></td>
+                                                    <td><?= $v->role ?></td>
                                                     <td>
-                                                        <a href="<?= site_url('kriteria/aksi/' . $v->kode_kriteria) ?>" class="btn btn-info btn-sm">Ubah</a>
-                                                        <button type="button" onclick="hapus('<?=site_url('kriteria/hapus/' . $v->kode_kriteria)?>')" class="btn btn-danger btn-sm">Hapus</button>
+                                                    <?php if($v->id_user != '1'){ ?>
+                                                        <a href="<?=site_url('pengguna/aksi/' . $v->id_user)?>" class="btn btn-info btn-sm">Ubah</a>
+                                                        <button type="button" onclick="hapus('<?=site_url('pengguna/hapus/' . $v->id_user)?>')" class="btn btn-danger btn-sm">Hapus</button>
+                                                    <?php } ?>
                                                     </td>
                                                 </tr>
                                             <?php } ?>

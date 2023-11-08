@@ -15,11 +15,6 @@ class Auth extends MY_Controller
 		$this->load->view('login');
 	}
 
-	function tes()
-	{
-		print_r($this->session->userdata());
-	}
-
 	function action($param)
 	{
 		$msg = array(

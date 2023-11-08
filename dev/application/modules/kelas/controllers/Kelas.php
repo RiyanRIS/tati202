@@ -8,6 +8,10 @@ class Kelas extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model(['kelas_model']);
+		if($this->session->userdata()['role'] != 'admin'){
+			$this->session->set_flashdata('error', "Maaf, Anda tidak berhak mengakses halaman ini.");
+			redirect($_SERVER['HTTP_REFERER']);
+		}
 	}
 
 	function index()

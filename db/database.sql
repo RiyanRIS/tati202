@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2023 at 06:49 PM
+-- Generation Time: Nov 08, 2023 at 09:39 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -40,7 +40,8 @@ CREATE TABLE `hasil` (
 INSERT INTO `hasil` (`kode_hasil`, `nis`, `hasil`) VALUES
 (5, '990823882797', '0,95'),
 (6, '990509170319', '0,99'),
-(7, '990142555462', '0,93');
+(7, '990142555462', '1,28'),
+(8, '991066940151', '0,33');
 
 -- --------------------------------------------------------
 
@@ -63,8 +64,7 @@ INSERT INTO `kelas` (`kode_kelas`, `nama_kelas`) VALUES
 ('KLS003', 'Kelas 3'),
 ('KLS004', 'Kelas 4'),
 ('KLS005', 'Kelas 5'),
-('KLS006', 'Kelas 6'),
-('xKLS006', 'Kelas 21');
+('KLS006', 'Kelas 6');
 
 -- --------------------------------------------------------
 
@@ -118,7 +118,8 @@ INSERT INTO `nilai` (`kode_nilai`, `nis`, `kode_kriteria`, `nilai`) VALUES
 (32, '990823882797', 'C3', 4),
 (33, '990823882797', 'C4', 90),
 (34, '990509170319', 'C4', 85),
-(35, '990509170319', 'C1', 85);
+(35, '990509170319', 'C1', 85),
+(36, '991066940151', 'C1', 80);
 
 -- --------------------------------------------------------
 
@@ -154,7 +155,7 @@ INSERT INTO `siswa` (`nis`, `nama_siswa`, `jk_siswa`, `alamat`, `tempat_lahir`, 
 ('990346882582', 'Salimah Suartini', 'perempuan', 'Psr. Adisucipto No. 528', 'Pekalongan', '1988-10-14', NULL, 'KLS003'),
 ('990445322659', 'Siska Nurdiyanti', 'perempuan', 'Ds. Industri No. 907', 'Kotamobagu', '2014-10-03', NULL, 'KLS004'),
 ('990493086269', 'Dodo Karma Sitorus M.TI.', 'perempuan', 'Jln. Abdul. Muis No. 724', 'Batu', '2017-03-26', NULL, 'KLS005'),
-('990509170319', 'Maimunah Victoria Pertiwi', 'laki-laki', 'Jln. Muwardi No. 650', 'Padang', '1981-03-31', NULL, 'KLS001'),
+('990509170319', 'Maimunah Victoria Pertiwi', 'laki-laki', ' Jln. Muwardi No. 650', 'Padang', '1981-03-31', '1699417018_654b0bba02cc5.jpg', 'KLS001'),
 ('990599683830', 'Galur Setiawan S.Gz', 'perempuan', 'Jr. Muwardi No. 160', 'Sorong', '2016-05-02', NULL, 'KLS003'),
 ('990662377028', 'Cinta Usada', 'laki-laki', 'Gg. Acordion No. 524', 'Tanjung Pinang', '1995-05-24', NULL, 'KLS002'),
 ('990722821450', 'Kezia Ulva Suartini M.M.', 'laki-laki', 'Ki. Achmad No. 565', 'Bau-Bau', '2021-09-30', NULL, 'KLS003'),
@@ -390,7 +391,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `username`, `password`, `role`) VALUES
-(1, 'admin', '$2y$10$hvZJCXwzIVyZQdJAsvX48ujBR8kRJhfHcK0PamxMH9I.m5gC8M6O2', 'admin');
+(1, 'admin', '$2y$10$hvZJCXwzIVyZQdJAsvX48ujBR8kRJhfHcK0PamxMH9I.m5gC8M6O2', 'admin'),
+(2, 'kepalasekolah', '$2y$10$ynQT5t.m7RDTvNQz9A.XX.2DHknksDsxfsED.8TXpMjZXj1fkXYYu', 'kepalasekolah');
 
 --
 -- Indexes for dumped tables
@@ -400,7 +402,8 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `role`) VALUES
 -- Indexes for table `hasil`
 --
 ALTER TABLE `hasil`
-  ADD PRIMARY KEY (`kode_hasil`);
+  ADD PRIMARY KEY (`kode_hasil`),
+  ADD KEY `hasil_siswa` (`nis`);
 
 --
 -- Indexes for table `kelas`
@@ -450,13 +453,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `hasil`
 --
 ALTER TABLE `hasil`
-  MODIFY `kode_hasil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `kode_hasil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `nilai`
 --
 ALTER TABLE `nilai`
-  MODIFY `kode_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `kode_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `subkriteria`
@@ -468,11 +471,17 @@ ALTER TABLE `subkriteria`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `hasil`
+--
+ALTER TABLE `hasil`
+  ADD CONSTRAINT `hasil_siswa` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `nilai`

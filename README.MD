@@ -20,6 +20,14 @@
 ### Struktur Table & Relasi
 - <img src="./assets/images/relasi_struktur_db.png" alt="image" width="720" border="5">
 
+### User & Password
+- Role Administrator
+  - Username: `admin`
+  - Password: `admin`
+- Role Kepala Sekolah
+  - Username: `kepalasekolah`
+  - Password: `kepalasekolah`
+
 ### Alur Sistem
 - Pertama isi data master terlebih dahulu
   - Master Data Kelas, berelasi dengan halaman Master Data Siswa.
