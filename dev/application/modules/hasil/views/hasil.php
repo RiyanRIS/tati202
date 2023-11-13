@@ -105,6 +105,7 @@ global $SConfig;
                                     foreach ($nilai_by_siswa as $key => $v) {
                                         $nis = $v->nis;
                                         $nama_siswa = $v->nama_siswa;
+                                        $nama_kelas = $v->nama_kelas;
                                         $total = 0;
                                         foreach ($kriteria as $key => $v) {
                                             $kode_kriteria = $v->kode_kriteria;
@@ -121,7 +122,7 @@ global $SConfig;
                                             }
                                         }
                                         $total = number_format($total, 2, ',', '.');
-                                        $perangkingan[] = array('nis' => $nis, 'nama_siswa' => $nama_siswa, 'total' => $total);
+                                        $perangkingan[] = array('nis' => $nis, 'nama_siswa' => $nama_siswa, 'total' => $total, 'nama_kelas' => $nama_kelas);
                                     }
 
                                     usort($perangkingan, function ($a, $b) {
@@ -133,9 +134,11 @@ global $SConfig;
                                     <table class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <th>Rangking</th>
+                                                <th>NIS</th>
                                                 <th>Nama Siswa</th>
-                                                <th>Total Nilai</th>
+                                                <th>Kelas</th>
+                                                <th>Total</th>
+                                                <th>Rangking</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -144,6 +147,7 @@ global $SConfig;
                                                     <?php
                                                     $nis = $v['nis'];
                                                     $nama_siswa = $v['nama_siswa'];
+                                                    $kelas = $v['nama_kelas'];
                                                     $total = $v['total'];
                                                     $insert = $this->db->query("SELECT * FROM hasil h WHERE h.nis = '$nis'")->result();
                                                     if (count($insert) >= 1) {
@@ -153,9 +157,11 @@ global $SConfig;
                                                         $this->db->query("INSERT INTO `hasil`(`nis`, `hasil`) VALUES ('$nis', '$total')");
                                                     }
                                                     ?>
-                                                    <td><?= $ranking ?></td>
+                                                    <td><?= $nis ?></td>
                                                     <td><?= $nama_siswa ?></td>
+                                                    <td><?= $kelas ?></td>
                                                     <td><?= $total ?></td>
+                                                    <td><?= $ranking ?></td>
                                                 </tr>
                                                 <?php $ranking++; ?>
                                             <?php } ?>

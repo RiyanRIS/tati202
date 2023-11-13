@@ -74,7 +74,7 @@
                     </a>
                 </li>
                 <?php } ?>
-                <li class="nav-header">TRANSAKSI & PERHITUNGAN</li>
+                <li class="nav-header">PERHITUNGAN & PERANGKINGAN</li>
                 <?php if($isadmin){ ?>
                 <li class="nav-item">
                     <a href="<?= site_url('nilai') ?>" class="nav-link" data-nav="nilai">

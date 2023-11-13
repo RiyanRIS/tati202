@@ -9,7 +9,7 @@ class Nilai_model extends MY_Model
 
     public function nilai_by_siswa()
     {
-        return $this->db->query('SELECT * FROM nilai n JOIN siswa s ON n.nis = s.nis GROUP BY n.nis')->result();
+        return $this->db->query('SELECT * FROM nilai n JOIN siswa s ON n.nis = s.nis JOIN kelas k ON s.kode_kelas = k.kode_kelas GROUP BY n.nis')->result();
     }
 
 }

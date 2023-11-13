@@ -46,10 +46,18 @@
 
 ## Srenshoot
 - <img src="./assets/images/login.png" alt="image" width="500" border="3">
-- <img src="./assets/images/data_kelas.png" alt="image" width="500" border="3">
+- <img src="./assets/images/data_kelas2.png" alt="image" width="500" border="3">
 - <img src="./assets/images/detail_siswa.png" alt="image" width="500" border="3">
 - <img src="./assets/images/data_kriteria.png" alt="image" width="500" border="3">
-- <img src="./assets/images/data_subkriteria.png" alt="image" width="500" border="3">
+- <img src="./assets/images/data_subkriteria2.png" alt="image" width="500" border="3">
 - <img src="./assets/images/alternatif_nilai.png" alt="image" width="500" border="3">
 - <img src="./assets/images/tambah_alternatif_nilai.png" alt="image" width="500" border="3">
-- <img src="./assets/images/hasil.png" alt="image" width="500" border="3">
+- <img src="./assets/images/hasil2.png" alt="image" width="500" border="3">
+
+## Perubahan
+#### 10 Nov 2023
+- Ruang lingkup hanya pada siswa kelas 4,5 dan 6.
+- Judul menu dari semula 'TRANSAKSI & PERHITUNGAN' menjadi 'PERHITUNGAN & PERANGKINGAN'.
+- Hasil perangkingan yang semula hanya kolom rangking, nama siswa dan total mejadi nis, nama siswa, kelas, total dan rangking.
+- Sub kriteria yang semula untuk jumlah kehadiran > 10 menjadi jumlah kehadiran 11 - 15.
+
