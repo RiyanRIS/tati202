@@ -1,5 +1,9 @@
 <?php
 
+function dd($data){
+	echo "<pre>"; print_r($data); die();
+}
+
 function is_nav($a, $b){
 	if($a == $b){
 		echo "active";

@@ -44,6 +44,7 @@ global $SConfig;
                                                     <td><?= $v->nama_kriteria ?></td>
                                                     <td><?= $v->nilai ?></td>
                                                     <td>
+                                                        <button type="button" onclick="edit_nilai('<?= $v->kode_nilai ?>')" class="btn btn-info btn-sm">Edit</button>
                                                         <button type="button" onclick="hapus('<?= site_url('nilai/hapus/' . $v->kode_nilai) ?>')" class="btn btn-danger btn-sm">Hapus</button>
                                                     </td>
                                                 </tr>
@@ -64,9 +65,46 @@ global $SConfig;
         <?= $this->load->view('template/footer') ?>
     </div>
 
+    <div class="modal fade" id="modal_ubah_nilai">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="form-horizontal" method="post" action="edit" data-refresh="true" data-url="<?= site_url("nilai/api/ubah") ?>" id="myForm" enctype="multipart/form-data" accept-charset="utf-8">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Ubah Nilai</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modal_ubah_nilai_content">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="btnsubmit" class="btn btn-info">Simpan</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <?= $this->load->view('template/script') ?>
 
     <script>
+        function edit_nilai(id) {
+            $.ajax({
+                url: '<?= site_url('nilai/api/') ?>ambil/' + id, // Ganti dengan URL yang sesuai untuk mengambil data siswa
+                type: 'GET',
+                dataType: 'json',
+                error: function() {
+                    toastr.error("Terjadi Kesalahan Pada Server!", "Error");
+                },
+                success: function(data) {
+                    $('#modal_ubah_nilai_content').html(data.html);
+                    $('#modal_ubah_nilai').modal('show'); // Menampilkan modal
+                }
+            });
+        }
+
         function hapus_all(url) {
             Swal.fire({
                 title: "Konfirmasi",
