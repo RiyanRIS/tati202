@@ -16,6 +16,42 @@ global $SConfig;
                 <div class="container-fluid">
                     <div class="row">
 
+                        <!-- Nilai Alternatif -->
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h2>Nilai Alternatif</h2>
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>NAMA SISWA</th>
+                                                <?php foreach ($kriteria as $key => $v) {
+                                                    echo "<th>$v->nama_kriteria ($v->kode_kriteria)</th>";
+                                                } ?>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($nilai_by_siswa as $key => $v) { ?>
+                                                <tr>
+                                                    <td><?= $v->nama_siswa ?></td>
+                                                    <?php
+                                                    $nis = $v->nis;
+                                                    foreach ($kriteria as $key => $v) {
+                                                        $kode_kriteria = $v->kode_kriteria;
+                                                        $data = $this->db->query("SELECT * FROM nilai n WHERE n.nis = '$nis' AND n.kode_kriteria = '$kode_kriteria'")->row();
+                                                        $nilai = $data->nilai ?? 0;
+                                                        echo "<td>$nilai</td>";
+                                                    } ?>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+
+
                         <!-- Matrik Keputusan -->
                         <div class="col-lg-12">
                             <div class="card">
@@ -40,6 +76,43 @@ global $SConfig;
                                                         $kode_kriteria = $v->kode_kriteria;
                                                         $data = $this->db->query("SELECT * FROM nilai n WHERE n.nis = '$nis' AND n.kode_kriteria = '$kode_kriteria'")->row();
                                                         $nilai = $data->nilai ?? 0;
+                                                        if ($kode_kriteria == 'C2') {
+                                                            if ($nilai > 10) {
+                                                                $nilai = 1;
+                                                            } else if ($nilai >= 9) {
+                                                                $nilai = 2;
+                                                            } else if ($nilai >= 6) {
+                                                                $nilai = 3;
+                                                            } else if ($nilai >= 3) {
+                                                                $nilai = 4;
+                                                            } else {
+                                                                $nilai = 5;
+                                                            }
+                                                        }
+
+                                                        if ($kode_kriteria == 'C3') {
+                                                            if ($nilai == 'Sangat Kurang') {
+                                                                $nilai = 1;
+                                                            } else 
+                                                            
+                                                            if ($nilai == 'Baik') {
+                                                                $nilai = 4;
+                                                            } else
+
+                                                            if ($nilai == 'Cukup') {
+                                                                $nilai = 3;
+                                                            } else
+
+                                                            if ($nilai == 'Kurang') {
+                                                                $nilai = 2;
+                                                            } else
+
+                                                            if ($nilai == 'Sangat Baik') {
+                                                                $nilai = 5;
+                                                            } else {
+                                                                $nilai = '<i>undefined</i>';
+                                                            }
+                                                        }
                                                         echo "<td>$nilai</td>";
                                                     } ?>
                                                 </tr>
@@ -75,15 +148,107 @@ global $SConfig;
                                                     foreach ($kriteria as $key => $v) {
                                                         $kode_kriteria = $v->kode_kriteria;
                                                         $data = $this->db->query("SELECT * FROM nilai n WHERE n.nis = '$nis' AND n.kode_kriteria = '$kode_kriteria'")->row();
-                                                        $data_tertinggi = $this->db->query("SELECT * FROM nilai n WHERE n.kode_kriteria = '$kode_kriteria' ORDER BY n.nilai DESC LIMIT 1")->row();
+
                                                         $nilai = $data->nilai ?? 0;
-                                                        $tertinggi = $data_tertinggi->nilai ?? 0;
-                                                        if($tertinggi == 0){
-                                                            $hasil_ = '<i>undefined</i>';
-                                                        } else {
-                                                            $hasil = $nilai / $tertinggi;
-                                                            $hasil_ = number_format($hasil, 2, ',', '.');
+
+                                                        if ($kode_kriteria == 'C2') {
+                                                            if ($nilai > 10) {
+                                                                $nilai = 1;
+                                                            } else if ($nilai >= 9) {
+                                                                $nilai = 2;
+                                                            } else if ($nilai >= 6) {
+                                                                $nilai = 3;
+                                                            } else if ($nilai >= 3) {
+                                                                $nilai = 4;
+                                                            } else {
+                                                                $nilai = 5;
+                                                            }
                                                         }
+
+                                                        if ($kode_kriteria == 'C3') {
+                                                            if ($nilai == 'Sangat Kurang') {
+                                                                $nilai = 1;
+                                                            } else
+
+                                                            if ($nilai == 'Baik') {
+                                                                $nilai = 4;
+                                                            } else
+
+                                                            if ($nilai == 'Cukup') {
+                                                                $nilai = 3;
+                                                            } else
+
+                                                            if ($nilai == 'Kurang') {
+                                                                $nilai = 2;
+                                                            } else
+
+                                                            if ($nilai == 'Sangat Baik') {
+                                                                $nilai = 5;
+                                                            } else {
+                                                                $nilai = 0;
+                                                            }
+                                                        }
+
+                                                        if ($kode_kriteria == 'C2') {
+                                                            $data_tertinggi = $this->db->query("SELECT * FROM nilai n WHERE n.kode_kriteria = '$kode_kriteria' ORDER BY n.nilai DESC LIMIT 1")->row();
+                                                            $tertinggi = $data_tertinggi->nilai ?? 0;
+
+                                                            if ($tertinggi > 10) {
+                                                                $tertinggi = 1;
+                                                            } else if ($tertinggi >= 9) {
+                                                                $tertinggi = 2;
+                                                            } else if ($tertinggi >= 6) {
+                                                                $tertinggi = 3;
+                                                            } else if ($tertinggi >= 3) {
+                                                                $tertinggi = 4;
+                                                            } else {
+                                                                $tertinggi = 5;
+                                                            }
+
+                                                            if ($tertinggi == 0) {
+                                                                $hasil_ = '<i>undefined</i>';
+                                                            } else {
+                                                                $hasil = $tertinggi / $nilai;
+                                                                $hasil_ = number_format($hasil, 2, ',', '.');
+                                                            }
+                                                        } else if ($kode_kriteria == 'C3') {
+                                                            $data_tertinggi = $this->db->query("SELECT * FROM nilai n WHERE n.kode_kriteria = '$kode_kriteria' ORDER BY CASE n.nilai 
+                                                            WHEN 'Sangat Baik' THEN 5
+                                                            WHEN 'Sangat Kurang' THEN 1
+                                                            WHEN 'Baik' THEN 4
+                                                            WHEN 'Kurang' THEN 2
+                                                            ELSE 3 END DESC LIMIT 1")->row();
+                                                            $tertinggi = $data_tertinggi->nilai ?? 0;
+
+                                                            if ($tertinggi > 10) {
+                                                                $tertinggi = 1;
+                                                            } else if ($tertinggi >= 9) {
+                                                                $tertinggi = 2;
+                                                            } else if ($tertinggi >= 6) {
+                                                                $tertinggi = 3;
+                                                            } else if ($tertinggi >= 3) {
+                                                                $tertinggi = 4;
+                                                            } else {
+                                                                $tertinggi = 5;
+                                                            }
+
+                                                            if ($tertinggi == 0) {
+                                                                $hasil_ = '<i>undefined</i>';
+                                                            } else {
+                                                                $hasil = $nilai / $tertinggi;
+                                                                $hasil_ = number_format($hasil, 2, ',', '.');
+                                                            }
+                                                        } else {
+                                                            $data_tertinggi = $this->db->query("SELECT * FROM nilai n WHERE n.kode_kriteria = '$kode_kriteria' ORDER BY n.nilai DESC LIMIT 1")->row();
+                                                            $tertinggi = $data_tertinggi->nilai ?? 0;
+                                                            if ($tertinggi == 0) {
+                                                                $hasil_ = '<i>undefined</i>';
+                                                            } else {
+                                                                $hasil = $nilai / $tertinggi;
+                                                                $hasil_ = number_format($hasil, 2, ',', '.');
+                                                            }
+                                                        }
+
                                                         echo "<td>$hasil_</td>";
                                                     } ?>
                                                 </tr>
@@ -107,21 +272,128 @@ global $SConfig;
                                         $nama_siswa = $v->nama_siswa;
                                         $nama_kelas = $v->nama_kelas;
                                         $total = 0;
+                                        // foreach ($kriteria as $key => $v) {
+                                        //     $kode_kriteria = $v->kode_kriteria;
+                                        //     $data = $this->db->query("SELECT * FROM nilai n WHERE n.nis = '$nis' AND n.kode_kriteria = '$kode_kriteria'")->row();
+                                        //     $data_tertinggi = $this->db->query("SELECT * FROM nilai n WHERE n.kode_kriteria = '$kode_kriteria' ORDER BY n.nilai DESC LIMIT 1")->row();
+                                        //     $nilai = $data->nilai ?? 0;
+                                        //     $tertinggi = $data_tertinggi->nilai ?? 0;
+                                        //     if($tertinggi == 0){
+                                        //         $hasil_ = 'undefined';
+                                        //     } else {
+                                        //         $hasil = $nilai / $tertinggi;
+                                        //         $hasil_final = $hasil * $v->bobot / 100;
+                                        //         $total += $hasil_final;
+                                        //     }
+                                        // }
                                         foreach ($kriteria as $key => $v) {
                                             $kode_kriteria = $v->kode_kriteria;
                                             $data = $this->db->query("SELECT * FROM nilai n WHERE n.nis = '$nis' AND n.kode_kriteria = '$kode_kriteria'")->row();
-                                            $data_tertinggi = $this->db->query("SELECT * FROM nilai n WHERE n.kode_kriteria = '$kode_kriteria' ORDER BY n.nilai DESC LIMIT 1")->row();
+
                                             $nilai = $data->nilai ?? 0;
-                                            $tertinggi = $data_tertinggi->nilai ?? 0;
-                                            if($tertinggi == 0){
-                                                $hasil_ = 'undefined';
-                                            } else {
-                                                $hasil = $nilai / $tertinggi;
-                                                $hasil_final = $hasil * $v->bobot / 100;
-                                                $total += $hasil_final;
+
+                                            if ($kode_kriteria == 'C2') {
+                                                if ($nilai > 10) {
+                                                    $nilai = 1;
+                                                } else if ($nilai >= 9) {
+                                                    $nilai = 2;
+                                                } else if ($nilai >= 6) {
+                                                    $nilai = 3;
+                                                } else if ($nilai >= 3) {
+                                                    $nilai = 4;
+                                                } else {
+                                                    $nilai = 5;
+                                                }
                                             }
+
+                                            if ($kode_kriteria == 'C3') {
+                                                if ($nilai == 'Sangat Kurang') {
+                                                    $nilai = 1;
+                                                }  else
+
+                                                if ($nilai == 'Baik') {
+                                                    $nilai = 4;
+                                                } else
+
+                                                if ($nilai == 'Cukup') {
+                                                    $nilai = 3;
+                                                } else
+
+                                                if ($nilai == 'Kurang') {
+                                                    $nilai = 2;
+                                                } else
+
+                                                if ($nilai == 'Sangat Baik') {
+                                                    $nilai = 5;
+                                                } else {
+                                                    $nilai = 0;
+                                                }
+                                            }
+
+                                            if ($kode_kriteria == 'C2') {
+                                                $data_tertinggi = $this->db->query("SELECT * FROM nilai n WHERE n.kode_kriteria = '$kode_kriteria' ORDER BY n.nilai DESC LIMIT 1")->row();
+                                                $tertinggi = $data_tertinggi->nilai ?? 0;
+
+                                                if ($tertinggi > 10) {
+                                                    $tertinggi = 1;
+                                                } else if ($tertinggi >= 9) {
+                                                    $tertinggi = 2;
+                                                } else if ($tertinggi >= 6) {
+                                                    $tertinggi = 3;
+                                                } else if ($tertinggi >= 3) {
+                                                    $tertinggi = 4;
+                                                } else {
+                                                    $tertinggi = 5;
+                                                }
+
+                                                if ($tertinggi == 0) {
+                                                    $hasil_ = '<i>undefined</i>';
+                                                } else {
+                                                    $hasil = $tertinggi / $nilai;
+                                                    $hasil_ = number_format($hasil, 2, ',', '.');
+                                                }
+                                            } else if ($kode_kriteria == 'C3') {
+                                                $data_tertinggi = $this->db->query("SELECT * FROM nilai n WHERE n.kode_kriteria = '$kode_kriteria' ORDER BY CASE n.nilai 
+                                                WHEN 'Sangat Baik' THEN 5
+                                                WHEN 'Sangat Kurang' THEN 1
+                                                WHEN 'Baik' THEN 4
+                                                WHEN 'Kurang' THEN 2
+                                                ELSE 3 END DESC LIMIT 1")->row();
+                                                $tertinggi = $data_tertinggi->nilai ?? 0;
+
+                                                if ($tertinggi > 10) {
+                                                    $tertinggi = 1;
+                                                } else if ($tertinggi >= 9) {
+                                                    $tertinggi = 2;
+                                                } else if ($tertinggi >= 6) {
+                                                    $tertinggi = 3;
+                                                } else if ($tertinggi >= 3) {
+                                                    $tertinggi = 4;
+                                                } else {
+                                                    $tertinggi = 5;
+                                                }
+
+                                                if ($tertinggi == 0) {
+                                                    $hasil_ = '<i>undefined</i>';
+                                                } else {
+                                                    $hasil = $nilai / $tertinggi;
+                                                    $hasil_ = number_format($hasil, 2, ',', '.');
+                                                }
+                                            } else {
+                                                $data_tertinggi = $this->db->query("SELECT * FROM nilai n WHERE n.kode_kriteria = '$kode_kriteria' ORDER BY n.nilai DESC LIMIT 1")->row();
+                                                $tertinggi = $data_tertinggi->nilai ?? 0;
+                                                if ($tertinggi == 0) {
+                                                    $hasil_ = '<i>undefined</i>';
+                                                } else {
+                                                    $hasil = $nilai / $tertinggi;
+                                                    $hasil_ = number_format($hasil, 2, ',', '.');
+                                                }
+                                            }
+
+                                            $hasil_final = $hasil * $v->bobot / 100;
+                                            $total += $hasil_final;
                                         }
-                                        $total = number_format($total, 2, ',', '.');
+                                        $total = number_format($total, 4, ',', '.');
                                         $perangkingan[] = array('nis' => $nis, 'nama_siswa' => $nama_siswa, 'total' => $total, 'nama_kelas' => $nama_kelas);
                                     }
 
@@ -167,10 +439,10 @@ global $SConfig;
                                             <?php } ?>
                                         </tbody>
                                     </table>
-                                    <?php if(count($perangkingan) >= 1){?>
-                                    <hr>
-                                    <br>
-                                    <h4>Jadi, rekomendasi pemilihan siswa berprestasi di <?=$SConfig->_site_name?> adalah <strong><?=$perangkingan[0]['nama_siswa']?></strong> dengan total nilai <strong><?=$perangkingan[0]['total']?></strong>.</h4>
+                                    <?php if (count($perangkingan) >= 1) { ?>
+                                        <hr>
+                                        <br>
+                                        <h4>Jadi, rekomendasi pemilihan siswa berprestasi di <?= $SConfig->_site_name ?> adalah <strong><?= $perangkingan[0]['nama_siswa'] ?></strong> dengan total nilai <strong><?= $perangkingan[0]['total'] ?></strong>.</h4>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -185,7 +457,7 @@ global $SConfig;
         </div>
         <?= $this->load->view('template/footer') ?>
     </div>
-                                        
+
     <?= $this->load->view('template/script') ?>
 
 </body>

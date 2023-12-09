@@ -39,8 +39,8 @@
                         </p>
                     </a>
                 </li>
-                <?php if($isadmin){ ?>
                 <li class="nav-header">DATA MASTER</li>
+                <?php if($isadmin){ ?>
                 <li class="nav-item">
                     <a href="<?= site_url('kelas') ?>" class="nav-link" data-nav="kelas">
                         <i class="nav-icon fas fa-landmark"></i>
@@ -57,6 +57,7 @@
                         </p>
                     </a>
                 </li>
+                <?php } ?>
                 <li class="nav-item">
                     <a href="<?= site_url('kriteria') ?>" class="nav-link" data-nav="kriteria">
                         <i class="nav-icon fas fa-pen-square"></i>
@@ -73,7 +74,6 @@
                         </p>
                     </a>
                 </li>
-                <?php } ?>
                 <li class="nav-header">PERHITUNGAN & PERANGKINGAN</li>
                 <?php if($isadmin){ ?>
                 <li class="nav-item">

@@ -28,6 +28,7 @@ class Nilai extends Admin_Controller
     $data = array(
       'title' => "Tambah Alternatif Nilai Siswa",
       "kelas" => $this->kelas_model->get(),
+      "kriteria" => $this->kriteria_model->get(),
       "is_update" => 0
     );
     $this->load->view('aksi', $data);
@@ -49,13 +50,13 @@ class Nilai extends Admin_Controller
         unset($post['kelas']);
 
         $is_empty[] = !empty($post['nis']) ? 0 : 1;
-        $is_empty[] = !empty($post['kode_kriteria']) ? 0 : 1;
-        $is_empty[] = !empty($post['nilai']) ? 0 : 1;
+        // $is_empty[] = !empty($post['kode_kriteria']) ? 0 : 1;
+        // $is_empty[] = !empty($post['nilai']) ? 0 : 1;
 
         $empty_notif = array(
           'nis',
-          'kode_kriteria',
-          'nilai',
+          // 'kode_kriteria',
+          // 'nilai',
         );
 
         $empty = array_keys($is_empty, 1);
@@ -70,32 +71,39 @@ class Nilai extends Admin_Controller
         if ($number_of_empty_field == 0) {
 
           if ($is_update == "1") {
-
-            $kode_nilai   = $post['kode_nilai'];
-            unset($post['kode_nilai']);
-            if ($this->nilai_model->update($post, ['kode_nilai' => $kode_nilai])) {
-              $this->session->set_flashdata('success', "Berhasil mengubah data nilai.");
-              $msg = array(
-                'status' => true,
-                'kode_status' => 200,
-                'message' => "Berhasil mengubah data nilai.",
-                'url' => site_url('nilai')
+            foreach ($post['nilai'] as $kode_kriteria => $nilai) {
+              $where = array(
+                'nis' => $post['nis'],
+                'kode_kriteria' => $kode_kriteria,
               );
-            } else {
-              $msg['message'] = 'Terjadi kesalahan pada proses update.';
+              $set = array(
+                'nilai' => $nilai
+              );
+              $this->nilai_model->update($set, $where);
             }
+            $this->session->set_flashdata('success', "Berhasil mengubah data alternatif nilai.");
+            $msg = array(
+              'status' => true,
+              'kode_status' => 200,
+              'message' => "Berhasil mengubah data alternatif nilai.",
+              'url' => site_url('nilai')
+            );
           } else {
-            if ($this->nilai_model->insert($post)) {
-              // if (1) {
-              $msg = array(
-                'status' => true,
-                'kode_status' => 200,
-                'message' => "Berhasil menambah data alternatif nilai.",
-                'url' => site_url('nilai')
+            foreach ($post['nilai'] as $kode_kriteria => $nilai) {
+              $insert = array(
+                'nis' => $post['nis'],
+                'kode_kriteria' => $kode_kriteria,
+                'nilai' => $nilai
               );
-            } else {
-              $msg['message'] = 'Terjadi kesalahan pada proses penginputan.';
+              $this->nilai_model->insert($insert);
             }
+            $this->session->set_flashdata('success', "Berhasil menambah data alternatif nilai.");
+            $msg = array(
+              'status' => true,
+              'kode_status' => 200,
+              'message' => "Berhasil menambah data alternatif nilai.",
+              'url' => site_url('nilai')
+            );
           }
         } else {
           $msg['err_form'] = $filtered_empty_field;
@@ -151,6 +159,23 @@ class Nilai extends Admin_Controller
           );
         } else {
           $msg['message'] = "Siswa tidak ditemukan.";
+        }
+      } else if ($param == 'ubah_one') {
+        $kode_nilai   = $post['kode_nilai'];
+        unset($post['kode_nilai']);
+        unset($post['is_update']);
+        unset($post['nis']);
+        unset($post['kode_kriteria']);
+        if ($this->nilai_model->update($post, ['kode_nilai' => $kode_nilai])) {
+          $this->session->set_flashdata('success', "Berhasil mengubah data alternatif nilai.");
+          $msg = array(
+            'status' => true,
+            'kode_status' => 200,
+            'message' => "Berhasil mengubah data alternatif nilai.",
+            'url' => site_url('nilai')
+          );
+        } else {
+          $msg['message'] = 'Terjadi kesalahan pada proses update.';
         }
       } else {
         $msg['message'] = "Halaman tidak ditemukan";

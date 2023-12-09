@@ -68,7 +68,7 @@ global $SConfig;
     <div class="modal fade" id="modal_ubah_nilai">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form class="form-horizontal" method="post" action="edit" data-refresh="true" data-url="<?= site_url("nilai/api/ubah") ?>" id="myForm" enctype="multipart/form-data" accept-charset="utf-8">
+                <form class="form-horizontal" method="post" action="edit" data-refresh="true" data-url="<?= site_url("nilai/api/ubah_one") ?>" id="myForm" enctype="multipart/form-data" accept-charset="utf-8">
                     <div class="modal-header">
                         <h4 class="modal-title">Ubah Nilai</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
