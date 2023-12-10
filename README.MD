@@ -61,3 +61,11 @@
 - Hasil perangkingan yang semula hanya kolom rangking, nama siswa dan total mejadi nis, nama siswa, kelas, total dan rangking.
 - Sub kriteria yang semula untuk jumlah kehadiran > 10 menjadi jumlah kehadiran 11 - 15.
 
+
+#### 10 Des 2023
+- Masukkan nilai asli dari absensi dan sikap di modul nilai
+- Membuat edit di modul nilai
+- Menambah tabel nilai asli di modul hasil
+- Memperbaiki perhitungan untuk absensi
+- Menghapus kalimat kesimpulan di modul hasil
+
