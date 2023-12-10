@@ -442,7 +442,7 @@ global $SConfig;
                                     <?php if (count($perangkingan) >= 1) { ?>
                                         <hr>
                                         <br>
-                                        <h4>Jadi, rekomendasi pemilihan siswa berprestasi di <?= $SConfig->_site_name ?> adalah <strong><?= $perangkingan[0]['nama_siswa'] ?></strong> dengan total nilai <strong><?= $perangkingan[0]['total'] ?></strong>.</h4>
+                                        <!-- <h4>Jadi, rekomendasi pemilihan siswa berprestasi di <?= $SConfig->_site_name ?> adalah <strong><?= $perangkingan[0]['nama_siswa'] ?></strong> dengan total nilai <strong><?= $perangkingan[0]['total'] ?></strong>.</h4> -->
                                     <?php } ?>
                                 </div>
                             </div>
