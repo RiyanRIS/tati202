@@ -68,6 +68,27 @@ class Nilai extends Admin_Controller
         $empty_field = implode(", ", $filtered_empty_field);
         $number_of_empty_field = array_sum($is_empty);
 
+        foreach ($post['nilai'] as $kode_kriteria => $nilai) {
+          if($kode_kriteria == "C1"){
+            if($nilai > 100){
+              $number_of_empty_field++;
+              $filtered_empty_field[] = array_push($filtered_empty_field, ["nilai[C1]"]);
+            }
+          }
+          if($kode_kriteria == "C4"){
+            if($nilai > 100){
+              $number_of_empty_field++;
+              $filtered_empty_field[] = array_push($filtered_empty_field, ["nilai[C4]"]);
+            }
+          }
+          if($kode_kriteria == "C2"){
+            if($nilai > 12){
+              $number_of_empty_field++;
+              $filtered_empty_field[] = array_push($filtered_empty_field, ["nilai[C2]"]);
+            }
+          }
+        }
+
         if ($number_of_empty_field == 0) {
 
           if ($is_update == "1") {

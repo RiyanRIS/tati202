@@ -9,7 +9,7 @@ class Kriteria_model extends MY_Model
 	// protected $_order_by 		= 'tgl_created_anggota';
 	// protected $_order_by_type 	= 'desc';
 
-	function hasKodeKriteria($kode_kriteria, $kode_kriteria_lama = 0):bool
+	function hasKodeKriteria($kode_kriteria, $kode_kriteria_lama = 0): bool
 	{
 		if ($kode_kriteria_lama == 0) {
 			$data_kriteria = $this->db->where($this->_primary_key, $kode_kriteria)->get($this->_table_name)->result();
@@ -17,23 +17,38 @@ class Kriteria_model extends MY_Model
 		}
 	}
 
-	function getTotalSubkriteria($kode_kriteria){
+	function getTotalSubkriteria($kode_kriteria)
+	{
 		$data = $this->db->select('*')
-						->from('subkriteria')
-						->where('subkriteria.kode_kriteria', $kode_kriteria)
-						->get()
-						->result();
+			->from('subkriteria')
+			->where('subkriteria.kode_kriteria', $kode_kriteria)
+			->get()
+			->result();
 		return count($data);
 	}
 
-	function getKriteriaOnNilai($kode_kriteria){
+	function getKriteriaOnNilai($kode_kriteria)
+	{
 		$data = $this->db->select('*')
-						->from('nilai')
-						->where('nilai.kode_kriteria', $kode_kriteria)
-						->get()
-						->result();
+			->from('nilai')
+			->where('nilai.kode_kriteria', $kode_kriteria)
+			->get()
+			->result();
 		return count($data);
 	}
 
-	
+	public function getTotalBobot($id_kriteria_dikecualikan = null)
+	{
+		$this->db->select('SUM(bobot) AS total_bobot');
+		$this->db->from('kriteria');
+
+		if ($id_kriteria_dikecualikan != null) {
+			$this->db->where('kode_kriteria !=', $id_kriteria_dikecualikan);
+		}
+
+		$query = $this->db->get();
+		$result = $query->row();
+
+		return $result->total_bobot;
+	}
 }

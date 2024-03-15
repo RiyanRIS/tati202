@@ -69,3 +69,8 @@
 - Memperbaiki perhitungan untuk absensi
 - Menghapus kalimat kesimpulan di modul hasil
 
+
+#### 15 Mar 2024
+- Memberi validasi pada tabel Kriteria untuk total bobot maksimal 100
+- Memberi validasi pada kolom Nilai Rata Raport, Nilai Ekskul dan Kehadiran 
+- Mengubah logic pada proses simpan Alternatif Nilai

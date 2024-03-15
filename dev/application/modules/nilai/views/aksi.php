@@ -130,7 +130,30 @@ global $SConfig;
                         toastr.error("Terjadi Kesalahan Pada Server!", "Error");
                     },
                     success: async function(data) {
-                        window.location.href = data.url
+                        console.log(data)
+                        if (data.status) {
+                            if (refresh == 'true') {
+                                window.location.href = data.url
+                            } else {
+                                await setTimeout(function() {
+                                    Swal.fire("Berhasil!", data.message, "success")
+                                }, 500);
+                            }
+                        } else {
+                            if (data.err_form) {
+                                data.err_form.forEach((v, i) => {
+                                    $("input[name='" + v + "']").addClass('is-invalid')
+                                    $("select[name='" + v + "']").addClass('is-invalid')
+                                })
+                            }
+
+                            $("#alertText").html(data.message)
+                            $("#myAlert").show(300);
+
+                            setTimeout(function() {
+                                $("#myAlert").hide(300);
+                            }, 5000);
+                        }
                     }
                 })
             })

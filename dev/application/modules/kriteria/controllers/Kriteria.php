@@ -76,33 +76,49 @@ class Kriteria extends Admin_Controller
 
 					if ($is_update == "1") {
 						$kode_kriteria 	= $post['kode_kriteria'];
-						unset($post['kode_kriteria']);
-						if ($this->kriteria_model->update($post, ['kode_kriteria' => $kode_kriteria])) {
-							$msg = array(
-								'status' => true,
-								'kode_status' => 200,
-								'message' => "Berhasil mengubah data kriteria.",
-								'url' => site_url('kriteria')
-							);
-						} else {
-							$msg['message'] = 'Terjadi kesalahan pada proses update.';
-						}
-					} else {
-						if (!$this->kriteria_model->hasKodeKriteria($post['kode_kriteria'])) {
-							if ($this->kriteria_model->insert($post)) {
-								$this->session->set_flashdata('success', "Berhasil menambah data kriteria.");
+						$total_bobot = $this->kriteria_model->getTotalBobot($kode_kriteria);
+						$final_bobot = $total_bobot + $post['bobot'];
+
+						if ($final_bobot <= 100) {
+							unset($post['kode_kriteria']);
+							if ($this->kriteria_model->update($post, ['kode_kriteria' => $kode_kriteria])) {
 								$msg = array(
 									'status' => true,
 									'kode_status' => 200,
-									'message' => "Berhasil menambah data kriteria.",
+									'message' => "Berhasil mengubah data kriteria.",
 									'url' => site_url('kriteria')
 								);
 							} else {
-								$msg['message'] = 'Terjadi kesalahan pada proses penginputan.';
+								$msg['message'] = 'Terjadi kesalahan pada proses update.';
 							}
 						} else {
-							$msg['err_form'] = ['kode_kriteria'];
-							$msg['message'] = 'Kode Kriteria sudah digunakan.';
+							$msg['err_form'] = array("bobot");
+							$msg['message'] = "Total bobot tidak boleh lebih dari 100.";
+						}
+					} else {
+						$total_bobot = $this->kriteria_model->getTotalBobot();
+						$final_bobot = $total_bobot + $post['bobot'];
+
+						if ($final_bobot <= 100) {
+							if (!$this->kriteria_model->hasKodeKriteria($post['kode_kriteria'])) {
+								if ($this->kriteria_model->insert($post)) {
+									$this->session->set_flashdata('success', "Berhasil menambah data kriteria.");
+									$msg = array(
+										'status' => true,
+										'kode_status' => 200,
+										'message' => "Berhasil menambah data kriteria.",
+										'url' => site_url('kriteria')
+									);
+								} else {
+									$msg['message'] = 'Terjadi kesalahan pada proses penginputan.';
+								}
+							} else {
+								$msg['err_form'] = ['kode_kriteria'];
+								$msg['message'] = 'Kode Kriteria sudah digunakan.';
+							}
+						} else {
+							$msg['err_form'] = ['bobot'];
+							$msg['message'] = 'Total bobot tidak boleh lebih dari 100.';
 						}
 					}
 				} else {
