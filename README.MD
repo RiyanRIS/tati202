@@ -74,3 +74,4 @@
 - Memberi validasi pada tabel Kriteria untuk total bobot maksimal 100
 - Memberi validasi pada kolom Nilai Rata Raport, Nilai Ekskul dan Kehadiran 
 - Mengubah logic pada proses simpan Alternatif Nilai
+- Memberi pesan kesalahan pada Alternatif Nilai

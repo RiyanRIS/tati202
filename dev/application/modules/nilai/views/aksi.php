@@ -50,6 +50,9 @@ global $SConfig;
                                                 <label for="nis" class="col-sm-2 col-form-label"><?= $v->nama_kriteria ?></label>
                                                 <div class="col-sm-10">
                                                     <input type="text" name="nilai[<?= $v->kode_kriteria ?>]" id="nilai" class="form-control" required="">
+                                                    <div class="invalid-feedback" id="feedback-nilai<?= $v->kode_kriteria ?>">
+                                                        
+                                                    </div>
                                                 </div>
                                             </div>
                                         <?php } ?>
@@ -145,6 +148,11 @@ global $SConfig;
                                     $("input[name='" + v + "']").addClass('is-invalid')
                                     $("select[name='" + v + "']").addClass('is-invalid')
                                 })
+                            }
+                            
+                            if(data.error_form_nilai) {
+                                $("input[name='nilai[" + data.error_form_nilai['0'] + "]']").addClass('is-invalid')
+                                $("#feedback-nilai" + data.error_form_nilai['0']).html(data.error_form_nilai['1'])
                             }
 
                             $("#alertText").html(data.message)

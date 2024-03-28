@@ -72,19 +72,19 @@ class Nilai extends Admin_Controller
           if($kode_kriteria == "C1"){
             if($nilai > 100){
               $number_of_empty_field++;
-              $filtered_empty_field[] = array_push($filtered_empty_field, ["nilai[C1]"]);
+              $msg['error_form_nilai'] = ["C1", "Tidak boleh lebih dari 100."];
             }
           }
           if($kode_kriteria == "C4"){
             if($nilai > 100){
               $number_of_empty_field++;
-              $filtered_empty_field[] = array_push($filtered_empty_field, ["nilai[C4]"]);
+              $msg['error_form_nilai'] = ["C4", "Tidak boleh lebih dari 100."];
             }
           }
           if($kode_kriteria == "C2"){
             if($nilai > 12){
               $number_of_empty_field++;
-              $filtered_empty_field[] = array_push($filtered_empty_field, ["nilai[C2]"]);
+              $msg['error_form_nilai'] = ["C2", "Tidak boleh lebih dari 12."];
             }
           }
         }
